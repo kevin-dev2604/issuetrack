@@ -1,0 +1,7 @@
+package com.kevinj.portfolio.issuetrack.global.time;
+
+import java.time.LocalDateTime;
+
+public interface TimeProvider {
+    LocalDateTime now();
+}

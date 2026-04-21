@@ -1,0 +1,57 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:postgresql://my-postgres:5432/devdb
+    username: kevinj
+    password: 12345^
+    driver-class-name: org.postgresql.Driver # Postgresql 드라이버 클래스
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: issuetrack
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  data:
+    redis:
+      host: my-redis
+      port: 6379
+
+app:
+  sql-logging:
+    enabled: true
+    log-sql: true
+    multiline: true
+    slow-query-threshold-ms: 1500
+
+logging:
+  file:
+    path: /app/logs
+  level:
+    org.springframework.security: WARN
+    com.kevinj.potfolio.common.logging.sql: DEBUG
+    com.kevinj.potfolio.common.logging.jooq-inline: OFF
+
+#*production profile sql logging configs
+#app:
+#  sql-logging:
+#    enabled: true
+#    log-sql: false
+#    multiline: false
+#    slow-query-threshold-ms: 2000
+#
+#logging:
+#  level:
+#    org.springframework.security: WARN
+#    com.kevinj.potfolio.common.logging.sql: WARN
+#    com.kevinj.potfolio.common.logging.jooq-inline: OFF
+
+jwt:
+  secret: 'jeSmI7RZr8KDzGSxWHPnKmvEo4zZAQdqwFGRUPJM8XN'
+  access-ttl-seconds: 900       #15분
+  refresh-ttl-seconds: 1209600  #14일

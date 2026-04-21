@@ -1,0 +1,40 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/devdb
+    username: kevinj
+    password: 12345^
+    driver-class-name: org.postgresql.Driver # Postgresql 드라이버 클래스
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: issuetrack
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+app:
+  sql-logging:
+    enabled: true
+    log-sql: true
+    multiline: true
+    slow-query-threshold-ms: 1000
+
+logging:
+  level:
+    com.kevinj.potfolio.common.logging.sql: DEBUG
+    com.kevinj.potfolio.common.logging.jooq-inline: DEBUG
+
+jwt:
+  secret: 'jeSmI7RZr8KDzGSxWHPnKmvEo4zZAQdqwFGRUPJM8XN'
+  access-ttl-seconds: 900       #15분
+  refresh-ttl-seconds: 1209600  #14일

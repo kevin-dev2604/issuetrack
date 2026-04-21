@@ -1,0 +1,21 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: issuetrack-app
+    ports:
+      - "18080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      LOGGING_FILE_PATH: /app/logs
+    volumes:
+      - ./docker-data/logs:/app/logs
+    networks:
+      - backend
+    restart: unless-stopped
+
+networks:
+  backend:
+    external: true
+    name: issuetrack-net

@@ -1,0 +1,13 @@
+package com.kevinj.portfolio.issuetrack;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class IssuetrackBackendApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
