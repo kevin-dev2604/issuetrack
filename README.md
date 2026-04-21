@@ -16,9 +16,10 @@ IssueTrack is a backend portfolio project that implements a personal issue manag
 - Validation and global exception handling
 - Local development environment with Docker Compose
 - Swagger / OpenAPI documentation
-- Admin Functions
-  - Categories & Attributes management
-  - Statistics queries implemented with jOOQ
+
+### Admin Functions
+- Categories & Attributes management
+- Statistics queries implemented with jOOQ
 
 ## Tech Stack
 - Java 21
@@ -30,6 +31,20 @@ IssueTrack is a backend portfolio project that implements a personal issue manag
 - PostgreSQL
 - Gradle
 - Docker / Docker Compose
+
+## My Role
+This is a solo backend portfolio project.
+
+I was responsible for:
+- domain design
+- database schema design
+- API implementation
+- authentication / authorization
+- query implementation
+- exception handling
+- test code
+- Docker-based local environment setup
+- project documentation
 
 ## Architecture Highlights
 This project follows a use-case oriented application structure.
@@ -44,7 +59,7 @@ This separation was intentional so that complex reporting queries can remain exp
 
 ## Getting Started
 
-### Prequistes
+### Prerequisites
 - Java 21
 - Docker
 - Docker Compose
@@ -88,7 +103,8 @@ Run tests with:
 I used different tools for different query responsibilities.
 - QueryDSL is used for application-facing search and retrieval queries
 - jOOQ is used for complex SQL, aggregation, and recursive statistics queries
-  This approach keeps the codebase practical:
+
+This approach keeps the codebase practical:
 - simpler application queries remain easy to maintain
 - advanced reporting queries stay expressive and close to SQL
 
@@ -111,24 +127,10 @@ This repository is intended to demonstrate that I can:
 - improved observability and logging strategy
 - additional production-oriented hardening
 
-## My Role
-This is a solo backend portfolio project.
-
-I was responsible for:
-- domain design
-- database schema design
-- API implementation
-- authentication / authorization
-- query implementation
-- exception handling
-- test code
-- Docker-based local environment setup
-- project documentation
-
 ## Project Structure
 
 ```text
-src/main/java/com/kevinj/portfolio/issuetrack
+src/main/java
  ┗ com
   ┗ kevinj
    ┗ portfolio
