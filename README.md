@@ -17,7 +17,7 @@ IssueTrack is a backend portfolio project that implements a personal issue manag
 - Local development environment with Docker Compose
 - Swagger / OpenAPI documentation
 
-### Admin Functions
+### Admin Features
 - Categories & Attributes management
 - Statistics queries implemented with jOOQ
 
