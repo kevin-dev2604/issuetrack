@@ -12,7 +12,7 @@ public class WithMockCustomUserSecurityContextFactory implements WithSecurityCon
     public SecurityContext createSecurityContext(WithMockCustomUser annotation) {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
 
-        // 1. 실제 사용하시는 SecurityUserDetails 객체 생성 (NPE 방지를 위해 필드 채우기)
+        // 1. Create the SecurityUserDetails object you will actually be using (populate fields to prevent NPE)
         SecurityUserDetails principal = new SecurityUserDetails(
             annotation.id(),
             annotation.loginId(),
@@ -20,14 +20,14 @@ public class WithMockCustomUserSecurityContextFactory implements WithSecurityCon
             annotation.role()
         );
 
-        // 2. Authentication 객체 생성
+        // 2. Create Authentication object
         Authentication auth = new UsernamePasswordAuthenticationToken(
             principal,
             principal.getPassword(),
             principal.getAuthorities()
         );
 
-        // 3. 컨텍스트에 주입
+        // 3. Inject into context
         context.setAuthentication(auth);
         return context;
     }

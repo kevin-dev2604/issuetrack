@@ -38,7 +38,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void 회원가입_성공_검증() {
+    void membership_success_verification() {
 
         Optional<User> userOptional = userService.getLoginUserDomain("user1");
         assertThat(userOptional.isPresent()).isTrue();
@@ -50,7 +50,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void 필수값_누락하여_가입시_실패() {
+    void sign_up_failed_due_to_missing_required_field() {
         assertThatThrownBy(() -> userService.signUp(
                 new UserCreateCommand(
                         "",
@@ -94,7 +94,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void 회원가입시_비밀번호_암호화_저장여부_검증() {
+    void verification_of_password_encryption_status_upon_sign_up() {
         String originalPwd = "fqor3t#";
         UserCreateCommand userCreateCommand = new UserCreateCommand(
                 "user2",
@@ -114,7 +114,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void 존재하는_아이디로_가입시_실패() {
+    void sign_up_failed_with_an_existing_id() {
         UserCreateCommand userCreateCommand = new UserCreateCommand(
                 "user1",
                 "swq23%",
@@ -128,7 +128,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void 중복된_이메일로_가입시_실패() {
+    void sign_up_failed_with_a_duplicate_email() {
         UserCreateCommand userCreateCommand = new UserCreateCommand(
                 "user4",
                 "qwe123^",
@@ -142,8 +142,8 @@ public class UserServiceTest {
     }
 
     @Test
-    void 비밀번호_및_이메일_형식이_안맞으면_회원가입_실패() {
-        // 패스워드 규칙은 5글자 이상 & 알파벳, 숫자, 특수기호로 구성 & 특수기호가 1개 이상 포함
+    void registration_fails_if_password_and_email_format_do_not_match() {
+        // The password rule is to be at least 5 characters long, consist of alphabets, numbers, and special characters, and include at least one special character.
 //        String rawPassword = "qwer12@";
         String rawPassword = "qwer";
 //        String rawPassword = "qwer12";
@@ -178,7 +178,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void 탈퇴한_사용자의_아이디로_가입_신청시_실패() {
+    void failed_to_sign_up_using_a_withdrawn_user_s_id() {
         userService.deleteUser(userId);
 
         UserCreateCommand userCreateCommand = new UserCreateCommand(
@@ -193,37 +193,4 @@ public class UserServiceTest {
                 .isInstanceOf(WithdrawnIdAccessException.class);
     }
 
-//    @Test
-//    void 회원_비활성화() {
-//
-//        User user1 = userService.getLoginUserDomain("user1").get();
-//
-//        user1.inactive();
-//
-//        assertThat(user1.getIsUse()).isEqualTo(YN.N);
-//    }
-//
-//    @Test
-//    void 회원정보_수정()  {
-//
-//        User user1 = userService.getLoginUserDomain("user1").get();
-//
-//        UserUpdateCommand command = new UserUpdateCommand(user1.getUserId(), "anotherUser", "another_user@kevinj.org", "another user");
-//
-//        user1.updateInfo(command);
-//
-//        assertThat(user1.getNickname()).isEqualTo(command.nickname());
-//        assertThat(user1.getEmail()).isEqualTo(command.email());
-//        assertThat(user1.getDetails()).isEqualTo(command.details());
-//    }
-//
-//    @Test
-//    void 비밀번호_변경() {
-//        User user1 = userService.getLoginUserDomain("user1").get();
-//
-//        String newPassword = fakePasswordEncoder.encode("emd3dm2893");
-//        user1.changePassword(newPassword);
-//
-//        assertThat(user1.getLoginPw()).isEqualTo(newPassword);
-//    }
 }

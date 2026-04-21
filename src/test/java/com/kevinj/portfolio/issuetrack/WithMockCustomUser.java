@@ -11,5 +11,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface WithMockCustomUser {
     String loginId() default "test";
     UserRole role() default UserRole.USER;
-    long id() default 1L; // NPE를 방지하기 위해 필요한 PK값 등 추가
+    long id() default 1L; // Additional PK values, etc. required to prevent NPEs
 }

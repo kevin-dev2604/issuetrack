@@ -57,7 +57,7 @@ public class ProcessServiceTest {
     }
 
     @Test
-    void process_단건생성_성공_검증 () {
+    void process_single_item_creation_success_verification () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
 
         ProcessCreateCommand processCreateCommand = new ProcessCreateCommand("process1", "test process", YN.Y);
@@ -71,7 +71,7 @@ public class ProcessServiceTest {
     }
 
     @Test
-    void process_수정_성공_검증 () {
+    void process_modification_success_verification () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         processUseCase.createProcessInfo(user1.getUserId(), new  ProcessCreateCommand("process1", "test process", YN.Y));
 
@@ -90,7 +90,7 @@ public class ProcessServiceTest {
     }
 
     @Test
-    void process_삭제_성공_검증 () {
+    void process_deletion_success_verification () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         processUseCase.createProcessInfo(user1.getUserId(), new  ProcessCreateCommand("process1", "test process", YN.Y));
 
@@ -104,7 +104,7 @@ public class ProcessServiceTest {
     }
 
     @Test
-    void process_검색_성공_검증 () {
+    void process_search_success_verification () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         processUseCase.createProcessInfo(user1.getUserId(), new  ProcessCreateCommand("Sprints", "Pure Speed / Power", YN.Y));
         processUseCase.createProcessInfo(user1.getUserId(), new  ProcessCreateCommand("Middle:Heat", "preliminary rounds", YN.Y));
@@ -122,7 +122,7 @@ public class ProcessServiceTest {
     }
 
     @Test
-    void process_생성시_파라미터가_유효하지_않으면_실패한다 () {
+    void if_parameters_are_invalid_during_process_creation__it_fails () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
 
         ProcessCreateCommand processCreateCommand1 = new ProcessCreateCommand(" ", null, YN.Y);
@@ -135,7 +135,7 @@ public class ProcessServiceTest {
     }
 
     @Test
-    void process_수정시_파라미터가_유효하지_않으면_실패한다 () {
+    void if_the_parameter_is_invalid_when_modifying_the_process__it_fails () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         processUseCase.createProcessInfo(user1.getUserId(), new ProcessCreateCommand("tests", "test case", YN.Y));
 
@@ -151,7 +151,7 @@ public class ProcessServiceTest {
     }
 
     @Test
-    void process를_중복해서_삭제하면_실패한다 () {
+    void deleting_duplicate_processes_fails () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         processUseCase.createProcessInfo(user1.getUserId(), new ProcessCreateCommand("tests", "test case", YN.Y));
 
@@ -163,7 +163,7 @@ public class ProcessServiceTest {
     }
 
     @Test
-    void 다른_사용자의_process를_조회하면_실패한다 () {
+    void querying_another_user_s_process_fails () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         processUseCase.createProcessInfo(user1.getUserId(), new ProcessCreateCommand("tests", "test case", YN.Y));
 

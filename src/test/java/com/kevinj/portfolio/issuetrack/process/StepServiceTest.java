@@ -50,7 +50,7 @@ public class StepServiceTest {
     }
 
     @Test
-    void step_단일생성_성공_검증 () {
+    void step_single_generation_success_verification () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user1, fakeProcessPort.lastId()).get();
 
@@ -60,7 +60,7 @@ public class StepServiceTest {
     }
 
     @Test
-    void step_일괄생성_성공_검증 () {
+    void step_batch_creation_success_verification () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user1, fakeProcessPort.lastId()).get();
 
@@ -82,7 +82,7 @@ public class StepServiceTest {
     }
 
     @Test
-    void step_수정_성공_검증 () {
+    void step_modification_success_verification () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user1, fakeProcessPort.lastId()).get();
         StepCreateCommand stepCreateCommand = new StepCreateCommand(process.getProcessId(), "Step 1", 1);
@@ -109,7 +109,7 @@ public class StepServiceTest {
     }
 
     @Test
-    void step_삭제_성공_검증 () {
+    void step_deletion_success_verification () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user1, fakeProcessPort.lastId()).get();
         stepUseCase.createStepInfo(user1.getUserId(), new StepCreateCommand(process.getProcessId(), "Step 1", 1));
@@ -119,7 +119,7 @@ public class StepServiceTest {
     }
 
     @Test
-    void step_생성시_파라미터가_유효하지_않으면_실패한다 () {
+    void if_parameters_are_invalid_during_step_creation__it_fails () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user1, fakeProcessPort.lastId()).get();
 
@@ -133,7 +133,7 @@ public class StepServiceTest {
     }
 
     @Test
-    void step_수정시_파라미터가_유효하지_않으면_실패한다 () {
+    void if_the_parameter_is_invalid_when_modifying_the_step__it_fails () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user1, fakeProcessPort.lastId()).get();
         StepCreateCommand stepCreateCommand = new StepCreateCommand(process.getProcessId(), "Step 1", 1);
@@ -173,7 +173,7 @@ public class StepServiceTest {
     }
 
     @Test
-    void step을_중복해서_삭제하면_실패한다 () {
+    void deleting_duplicate_steps_fails () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user1, fakeProcessPort.lastId()).get();
         StepCreateCommand stepCreateCommand = new StepCreateCommand(process.getProcessId(), "Step 1", 1);
@@ -188,7 +188,7 @@ public class StepServiceTest {
     }
 
     @Test
-    void 다른_process의_step을_조회하면_실패한다 () {
+    void querying_a_step_of_another_process_fails () {
         User user1 = fakeUserPort.loadLoginUser("test1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user1, fakeProcessPort.lastId()).get();
         StepCreateCommand stepCreateCommand = new StepCreateCommand(process.getProcessId(), "Step 1", 1);

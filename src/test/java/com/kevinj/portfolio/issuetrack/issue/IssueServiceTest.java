@@ -152,7 +152,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void issue_생성_성공_검증() {
+    void issue_creation_success_verification() {
 
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
@@ -190,7 +190,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void 존재하지_않는_category로_issue_생성하면_실패한다() {
+    void creating_an_issue_with_a_non_existent_category_fails() {
 
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
@@ -231,7 +231,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void 존재하지_않는_attribute로_issue_생성하면_실패한다() {
+    void creating_an_issue_with_a_non_existent_attribute_fails() {
 
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
@@ -256,7 +256,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void 존재하지_않는_process로_issue_생성하면_실패한다() {
+    void creating_an_issue_for_a_non_existent_process_fails() {
 
         User user = fakeUserPort.loadLoginUser("tester1").get();
         Long processId = fakeProcessPort.lastId() + 1;
@@ -294,7 +294,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void process에_step을_등록하지_않은채로_issue_생성하면_실패한다() {
+    void if_you_create_an_issue_without_registering_a_step_to_the_process__it_fails() {
 
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
@@ -332,7 +332,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void issue_수정_성공_검증() {
+    void issue_fix_success_verification() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
         createBasicSteps(user, process);
@@ -405,7 +405,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void 유효하지_않은_정보로_issue_수정하면_실패한다() {
+    void modifying_an_issue_with_invalid_information_fails() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
         createBasicSteps(user, process);
@@ -527,7 +527,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void issue의_process_진행_성공_검증() {
+    void verification_of_issue_s_process_success() {
 
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
@@ -568,7 +568,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void issue의_process_현재_step이_마지막_순서이면_process_진행이_실패한다() {
+    void if_the_issue_s_process_s_current_step_is_the_last__the_process_fails() {
 
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
@@ -619,7 +619,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void issue_상태변경_성공_검증() {
+    void issue_status_change_success_verification() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
         createBasicSteps(user, process);
@@ -660,7 +660,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void issue_상태를_EXIT로_바꾸면_수정이_실패한다() {
+    void if_you_change_the_issue_status_to_EXIT__the_modification_fails() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
         createBasicSteps(user, process);
@@ -722,7 +722,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void issue_상태를_PENDING으로_바꾸면_프로세스_진행이_실패한다() {
+    void if_you_change_the_issue_status_to_PENDING__the_process_fails() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
         createBasicSteps(user, process);
@@ -767,7 +767,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void issue의_프로세스_변경_성공_검증() {
+    void verification_of_successful_issue_process_change() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
         createBasicSteps(user, process);
@@ -817,7 +817,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void issue에_step을_등록하지_않은_프로세스로_변경하면_실패한다() {
+    void if_you_change_to_a_process_that_has_not_registered_a_step_in_the_issue__it_fails() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
         createBasicSteps(user, process);
@@ -863,7 +863,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void issue_상태를_EXIT로_바꾸면_프로세스_변경이_실패한다() {
+    void if_you_change_the_issue_status_to_EXIT__the_process_change_fails() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
         createBasicSteps(user, process);
@@ -912,7 +912,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void issue_검색_성공_검증() {
+    void issue_search_success_verification() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
         createBasicSteps(user, process);
@@ -975,7 +975,7 @@ public class IssueServiceTest {
     }
 
     @Test
-    void issue_상세조회_성공_검증() {
+    void issue_detail_view_success_verification() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
         createBasicSteps(user, process);

@@ -25,7 +25,7 @@ public class AttributesManageServiceTest {
     private final AttributesManageService attributesManageService = new AttributesManageService(fakeAttributeManagePort, fakeAdminUsageCheckPort, attributesMapper);
 
     @Test
-    void 어트리뷰트_생성_및_단건조회_검증() {
+    void attribute_creation_and_single_retrieval_verification() {
         AttributesCreateCommand createCommand = new AttributesCreateCommand("attribute 1", YN.Y);
         assertThatNoException().isThrownBy(() -> attributesManageService.createAttributeManage(createCommand));
 
@@ -35,7 +35,7 @@ public class AttributesManageServiceTest {
     }
 
     @Test
-    void 어트리뷰트_검색_검증() {
+    void attribute_search_verification() {
         attributesManageService.createAttributeManage(new AttributesCreateCommand("attribute 1", YN.Y));
         attributesManageService.createAttributeManage(new AttributesCreateCommand("attribute 2", YN.Y));
         attributesManageService.createAttributeManage(new AttributesCreateCommand("invalid", YN.N));
@@ -51,7 +51,7 @@ public class AttributesManageServiceTest {
     }
 
     @Test
-    void 어트리뷰트_수정_검증() {
+    void attribute_modification_verification() {
         attributesManageService.createAttributeManage(new AttributesCreateCommand("attribute 1", YN.Y));
         AttributesManageInfoResponse original = attributesManageService.getAttributesManageInfo(fakeAttributeManagePort.lastId());
         AttributesUpdateCommand command = new AttributesUpdateCommand(original.attributesId(), "new label", YN.N);
@@ -64,7 +64,7 @@ public class AttributesManageServiceTest {
     }
 
     @Test
-    void 어트리뷰트_삭제_검증() {
+    void attribute_deletion_verification() {
         attributesManageService.createAttributeManage(new AttributesCreateCommand("attribute 1", YN.Y));
         Long lastAttributeId = fakeAttributeManagePort.lastId();
 
@@ -74,7 +74,7 @@ public class AttributesManageServiceTest {
     }
 
     @Test
-    void 없는_어트리뷰트_ID로_조회하면_실패한다() {
+    void querying_with_non_existent_attribute_id_fails() {
         attributesManageService.createAttributeManage(new AttributesCreateCommand("attribute 1", YN.Y));
         Long lastAttributeId = fakeAttributeManagePort.lastId() + 1;
 
@@ -83,7 +83,7 @@ public class AttributesManageServiceTest {
     }
 
     @Test
-    void 없는_어트리뷰트_ID로_수정하면_실패한다() {
+    void modifying_with_a_non_existent_attribute_id_fails() {
         attributesManageService.createAttributeManage(new AttributesCreateCommand("attribute 1", YN.Y));
         Long lastAttributeId = fakeAttributeManagePort.lastId() + 1;
 
@@ -93,7 +93,7 @@ public class AttributesManageServiceTest {
     }
 
     @Test
-    void 없는_어트리뷰트_ID로_삭제하면_실패한다() {
+    void deleting_with_a_non_existent_attribute_id_fails() {
         attributesManageService.createAttributeManage(new AttributesCreateCommand("attribute 1", YN.Y));
         Long lastAttributeId = fakeAttributeManagePort.lastId() + 1;
 
@@ -103,7 +103,7 @@ public class AttributesManageServiceTest {
     }
 
     @Test
-    void 중복된_LABEL의_어트리뷰트를_생성하면_실패한다() {
+    void creating_duplicate_label_attributes_fails() {
         attributesManageService.createAttributeManage(new AttributesCreateCommand("attribute 1", YN.Y));
 
         assertThatException().isThrownBy(() ->
@@ -112,7 +112,7 @@ public class AttributesManageServiceTest {
     }
 
     @Test
-    void 수정하려는_어트리뷰트의_LABEL이_중복되면_실패한다() {
+    void fails_if_the_label_of_the_attribute_to_be_modified_is_duplicated() {
         attributesManageService.createAttributeManage(new AttributesCreateCommand("attribute 1", YN.Y));
         attributesManageService.createAttributeManage(new AttributesCreateCommand("attribute 2", YN.Y));
 
@@ -123,7 +123,7 @@ public class AttributesManageServiceTest {
     }
 
     @Test
-    void 유효하지_않은_어트리뷰트_생성정보로_생성하면_실패한다() {
+    void creation_fails_with_invalid_attribute_creation_information() {
         AttributesCreateCommand command1 = new AttributesCreateCommand(" ", YN.Y);
         assertThatException().isThrownBy(() -> attributesManageService.createAttributeManage(command1))
                 .isInstanceOf(WrongParametersInputException.class);

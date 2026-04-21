@@ -26,7 +26,7 @@ public class CategoryManageServiceTest {
     private final CategoryManageUseCase categoryManageService = new CategoryManageService(fakeCategoryManagePort, fakeAdminUsageCheckPort, categoryMapper);
 
     @Test
-    void 카테고리_생성_및_단건조회_검증() {
+    void category_creation_and_single_retrieval_verification() {
         CategoryCreateCommand createCommand = new CategoryCreateCommand(null, "Test Category", YN.Y);
         assertThatNoException().isThrownBy(() -> categoryManageService.createCategory(createCommand));
 
@@ -37,7 +37,7 @@ public class CategoryManageServiceTest {
     }
 
     @Test
-    void 카테고리_검색_검증() {
+    void category_search_verification() {
         categoryManageService.createCategory(new CategoryCreateCommand(null, "Test Parent Category", YN.Y));
         categoryManageService.createCategory(new CategoryCreateCommand(1L, "Test Child Category", YN.Y));
         categoryManageService.createCategory(new CategoryCreateCommand(null, "non searchable Category", YN.Y));
@@ -49,7 +49,7 @@ public class CategoryManageServiceTest {
     }
 
     @Test
-    void 카테고리_수정_검증() {
+    void category_edit_verification() {
         categoryManageService.createCategory(new CategoryCreateCommand(null, "Category Level 1", YN.Y));
         categoryManageService.createCategory(new CategoryCreateCommand(1L, "Category Level 2", YN.Y));
         categoryManageService.createCategory(new CategoryCreateCommand(2L, "Category Level 3", YN.Y));
@@ -65,7 +65,7 @@ public class CategoryManageServiceTest {
     }
 
     @Test
-    void 카테고리_삭제_검증() {
+    void category_deletion_verification() {
         categoryManageService.createCategory(new CategoryCreateCommand(null, "Category Level 1", YN.Y));
         categoryManageService.createCategory(new CategoryCreateCommand(1L, "Category Level 2", YN.Y));
 
@@ -77,7 +77,7 @@ public class CategoryManageServiceTest {
     }
 
     @Test
-    void 없는_카테고리_ID로_조회하면_실패한다() {
+    void searching_with_non_existent_category_id_fails() {
         categoryManageService.createCategory(new CategoryCreateCommand(null, "Category Level 1", YN.Y));
         categoryManageService.createCategory(new CategoryCreateCommand(1L, "Category Level 2", YN.Y));
 
@@ -86,7 +86,7 @@ public class CategoryManageServiceTest {
     }
 
     @Test
-    void 없는_카테고리_ID로_수정하면_실패한다() {
+    void editing_with_a_non_existent_category_id_fails() {
         categoryManageService.createCategory(new CategoryCreateCommand(null, "Category Level 1", YN.Y));
         categoryManageService.createCategory(new CategoryCreateCommand(1L, "Category Level 2", YN.Y));
 
@@ -98,7 +98,7 @@ public class CategoryManageServiceTest {
     }
 
     @Test
-    void 없는_카테고리_ID로_삭제하면_실패한다() {
+    void deleting_with_a_non_existent_category_id_fails() {
         categoryManageService.createCategory(new CategoryCreateCommand(null, "Category Level 1", YN.Y));
         categoryManageService.createCategory(new CategoryCreateCommand(1L, "Category Level 2", YN.Y));
 
@@ -107,7 +107,7 @@ public class CategoryManageServiceTest {
     }
 
     @Test
-    void 부모_카테고리에_중복된_LABEL의_카테고리를_생성하면_실패한다() {
+    void creating_a_category_for_a_label_that_is_duplicated_in_the_parent_category_fails() {
         categoryManageService.createCategory(new CategoryCreateCommand(null, "Category Level 1", YN.Y));
         categoryManageService.createCategory(new CategoryCreateCommand(1L, "Category Level 2", YN.Y));
 
@@ -117,7 +117,7 @@ public class CategoryManageServiceTest {
     }
 
     @Test
-    void 수정하려는_카테고리의_LABEL이_부모_카테고리_하위에서_중복되면_실패한다() {
+    void fails_if_the_label_of_the_category_to_be_modified_is_duplicated_under_the_parent_category() {
         categoryManageService.createCategory(new CategoryCreateCommand(null, "Category Level 1", YN.Y));
         categoryManageService.createCategory(new CategoryCreateCommand(1L, "Category Level 2", YN.Y));
         categoryManageService.createCategory(new CategoryCreateCommand(2L, "Category Level 3", YN.Y));
@@ -128,7 +128,7 @@ public class CategoryManageServiceTest {
     }
 
     @Test
-    void 유효하지_않은_카테고리_생성정보로_생성하면_실패한다() {
+    void creation_fails_with_invalid_category_creation_information() {
         CategoryCreateCommand createCommand1 = new CategoryCreateCommand(-1L, "invalid", YN.Y);
         assertThatException().isThrownBy(() -> categoryManageService.createCategory(createCommand1))
                 .isInstanceOf(WrongParametersInputException.class);

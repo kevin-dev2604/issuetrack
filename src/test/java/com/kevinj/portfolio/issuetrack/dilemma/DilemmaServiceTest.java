@@ -126,7 +126,7 @@ public class DilemmaServiceTest {
     }
 
     @Test
-    void dilemma_등록_성공_검증() {
+    void dilemma_registration_success_verification() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         Long issueId = fakeIssuePort.lastId();
 
@@ -143,7 +143,7 @@ public class DilemmaServiceTest {
     }
 
     @Test
-    void issue에_open된_dilemma가_존재하면_dilemma_등록이_실패한다() {
+    void if_there_is_an_open_dilemma_in_the_issue__dilemma_registration_fails() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         Long issueId = fakeIssuePort.lastId();
 
@@ -169,7 +169,7 @@ public class DilemmaServiceTest {
     }
 
     @Test
-    void issue_상태가_EXIT_이면_dilemma_등록이_실패한다() {
+    void if_issue_status_is_EXIT_dilemma_registration_fails() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         Long issueId = fakeIssuePort.lastId();
 
@@ -190,7 +190,7 @@ public class DilemmaServiceTest {
     }
 
     @Test
-    void dilemma_종료_성공_검증() {
+    void dilemma_closing_success_verification() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         Long issueId = fakeIssuePort.lastId();
 
@@ -210,7 +210,7 @@ public class DilemmaServiceTest {
     }
 
     @Test
-    void 종료된_dilemma는_수정이_실패한다() {
+    void closed_dilemma_failed() {
         User user = fakeUserPort.loadLoginUser("tester1").get();
         Long issueId = fakeIssuePort.lastId();
 
@@ -342,7 +342,7 @@ public class DilemmaServiceTest {
     }
 
     @Test
-    void 사용자_dilemma_검색_성공_검증() {
+    void user_dilemma_search_success_verification() {
         setupAnotherUserDilemma();
 
         User user2 = fakeUserPort.loadLoginUser("eren").get();
@@ -360,7 +360,7 @@ public class DilemmaServiceTest {
     }
 
     @Test
-    void 전체_dilemma_검색_성공_검증() {
+    void verification_of_overall_dilemma_search_success() {
         setupAnotherUserDilemma();
 
         DilemmaSearchCommand searchCommand = new DilemmaSearchCommand(
@@ -383,7 +383,7 @@ public class DilemmaServiceTest {
     }
 
     @Test
-    void dilemmaDiscussion_등록_성공_검증() {
+    void dilemmaDiscussion_registration_success_verification() {
         setupAnotherUserDilemma();
 
         User user1 = fakeUserPort.loadLoginUser("tester1").get();
@@ -401,7 +401,7 @@ public class DilemmaServiceTest {
     }
 
     @Test
-    void 존재하지_않는_dilemma에_dilemmaDiscussion_등록하면_실패한다() {
+    void registering_a_dilemmaDiscussion_on_a_non_existent_dilemma_fails() {
         setupAnotherUserDilemma();
 
         User user1 = fakeUserPort.loadLoginUser("tester1").get();
@@ -419,7 +419,7 @@ public class DilemmaServiceTest {
     }
 
     @Test
-    void dilemmaDiscussion_편집_성공_검증() {
+    void dilemmaDiscussion_edit_success_verification() {
         setupAnotherUserDilemma();
 
         User user1 = fakeUserPort.loadLoginUser("tester1").get();
@@ -447,7 +447,7 @@ public class DilemmaServiceTest {
     }
 
     @Test
-    void dilemmaDiscussion_삭제_성공_검증() {
+    void dilemmaDiscussion_deletion_success_verification() {
         setupAnotherUserDilemma();
 
         User user1 = fakeUserPort.loadLoginUser("tester1").get();

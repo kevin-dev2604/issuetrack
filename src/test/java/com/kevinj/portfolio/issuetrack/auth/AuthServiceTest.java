@@ -57,7 +57,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    void 로그인_성공시_accessToken과_refreshToken을_발급한다() {
+    void issue_accesstoken_and_refreshtoken_upon_successful_login() {
         LoginResponse response = authService.login(new LoginCommand(loginId, loginPw), "TEST");
 
         assertThat(response).isNotNull();
@@ -66,7 +66,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    void 로그인_성공시_refreshToken을_저장한다() {
+    void save_the_refreshtoken_upon_successful_login() {
         LoginResponse response = authService.login(new LoginCommand(loginId, loginPw), "TEST");
 
         assertThat(fakeRefreshTokenStore.get(userId).isPresent()).isTrue();
@@ -75,13 +75,13 @@ public class AuthServiceTest {
     }
 
     @Test
-    void 비밀번호_불일치시_로그인_실패한다() {
+    void login_fails_if_password_does_not_match() {
         assertThatThrownBy(() -> authService.login(new LoginCommand(loginId, "rtu36%"), "TEST"))
                 .isInstanceOf(PasswordDoNotMatchException.class);
     }
 
     @Test
-    void 존재하지_않는_아이디는_로그인_실패한다() {
+    void login_fails_for_non_existent_ids() {
         LoginCommand command = new LoginCommand("unsigned_user", "rtu36%");
 
         assertThatThrownBy(() -> authService.login(command, "TEST"))
@@ -89,7 +89,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    void 비활성화_아이디는_로그인_실패한다() {
+    void disabled_ids_fail_to_login() {
         User user = fakeUserPort.loadById(userId).get();
         user.inactive();
 
@@ -98,7 +98,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    void 로그인_이후_결과에_따라_로그를_저장한다() {
+    void save_logs_based_on_results_after_login() {
         authService.login(new LoginCommand(loginId, loginPw), "TEST");
         assertThat(fakeLoginLogPort.getLastLog().getIsSuccess()).isEqualTo(YN.Y);
 
@@ -109,7 +109,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    void 유효한_refreshToken으로_토큰을_재발급한다() {
+    void reissue_token_with_a_valid_refreshtoken() {
         LoginResponse loginResponse = authService.login(new LoginCommand(loginId, loginPw), "TEST");
         RefreshResponse refreshResponse = authService.refresh(new RefreshCommand(loginResponse.refreshToken()));
 
@@ -119,7 +119,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    void 저장되지_않은_refreshToken이면_재발급에_실패한다() {
+    void if_the_refresh_token_is_not_saved_reissuance_fails() {
         authService.login(new LoginCommand(loginId, loginPw), "TEST");
 
         String inValidRefreshToken = fakeTokenProvider.createRefreshToken(userId);
@@ -128,7 +128,7 @@ public class AuthServiceTest {
                 .isInstanceOf(RefreshTokenInvalidException.class);
     }
     @Test
-    void accessToken으로_토근을_재발급하면_실패한다() {
+    void reissuing_a_token_with_an_accesstoken_fails() {
         LoginResponse loginResponse = authService.login(new LoginCommand(loginId, loginPw), "TEST");
 
         assertThatThrownBy(() -> authService.refresh(new RefreshCommand(loginResponse.accessToken())))
@@ -136,7 +136,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    void 로그아웃하면_refreshToken이_삭제된다() {
+    void the_refresh_token_is_deleted_when_logout() {
         LoginResponse loginResponse = authService.login(new LoginCommand(loginId, loginPw), "TEST");
         authService.logout(new RefreshCommand(loginResponse.refreshToken()));
 
@@ -144,7 +144,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    void 로그아웃_이후_같은_refreshToken으로_재발급하면_실패한다() {
+    void reissuing_with_the_same_refreshtoken_after_logout_fails() {
         LoginResponse loginResponse = authService.login(new LoginCommand(loginId, loginPw), "TEST");
         RefreshCommand refreshCommand = new RefreshCommand(loginResponse.refreshToken());
         authService.logout(refreshCommand);
