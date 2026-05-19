@@ -32,7 +32,7 @@ public class DilemmaPersistenceAdapter implements DilemmaPort {
     private final DilemmaMapper dilemmaMapper;
 
     @Override
-    public void createDilemma(DilemmaCreateCommand createCommand) {
+    public Long createDilemma(DilemmaCreateCommand createCommand) {
         Issue issue = jpaIssueRepository.getReferenceById(createCommand.issueId());
         Dilemma dilemma = new Dilemma(null,
                 issue,
@@ -42,6 +42,7 @@ public class DilemmaPersistenceAdapter implements DilemmaPort {
         );
 
         jpaDilemmaRepository.save(dilemma);
+        return dilemma.getDilemmaId();
     }
 
     @Override

@@ -40,7 +40,8 @@ public class DilemmaServiceTest {
     private final FakeIssuePort fakeIssuePort = new FakeIssuePort();
     private final FakeDilemmaPort fakeDilemmaPort = new FakeDilemmaPort();
     private final FakeDilemmaDiscussionPort fakeDilemmaDiscussionPort = new FakeDilemmaDiscussionPort();
-    private final DilemmaService dilemmaService = new DilemmaService(fakeUserPort, fakeIssuePort, fakeDilemmaPort, fakeDilemmaDiscussionPort);
+    private final FakeDilemmaEventPort fakeDilemmaEventPort = new FakeDilemmaEventPort();
+    private final DilemmaService dilemmaService = new DilemmaService(fakeUserPort, fakeIssuePort, fakeDilemmaPort, fakeDilemmaDiscussionPort, fakeDilemmaEventPort);
 
     @BeforeEach
     void setUp() {

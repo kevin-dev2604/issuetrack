@@ -2,6 +2,7 @@ package com.kevinj.portfolio.issuetrack.dilemma.application;
 
 import com.kevinj.portfolio.issuetrack.dilemma.application.dto.*;
 import com.kevinj.portfolio.issuetrack.dilemma.application.port.DilemmaDiscussionPort;
+import com.kevinj.portfolio.issuetrack.dilemma.application.port.DilemmaEventProducerPort;
 import com.kevinj.portfolio.issuetrack.dilemma.application.port.DilemmaPort;
 import com.kevinj.portfolio.issuetrack.dilemma.domain.DilemmaDiscussionDomain;
 import com.kevinj.portfolio.issuetrack.dilemma.domain.DilemmaDomain;
@@ -35,6 +36,7 @@ public class DilemmaService implements DilemmaUseCase {
     private final IssuePort issuePort;
     private final DilemmaPort dilemmaPort;
     private final DilemmaDiscussionPort dilemmaDiscussionPort;
+    private final DilemmaEventProducerPort eventProducerPort;
 
     @Override
     public void openDilemma(Long userId, DilemmaCreateCommand createCommand) {
@@ -45,10 +47,12 @@ public class DilemmaService implements DilemmaUseCase {
             throw new DisabledStatusException();
         }
 
-        dilemmaPort.createDilemma(createCommand);
+        Long dilemmaId = dilemmaPort.createDilemma(createCommand);
 
         issue.convertToDilemma();
         issuePort.saveIssue(issue);
+
+        eventProducerPort.sendDilemmaOpen(dilemmaId, createCommand.title(), userId);
     }
 
     @Override
@@ -63,6 +67,8 @@ public class DilemmaService implements DilemmaUseCase {
         dilemma.editDilemma(editCommand.title(), editCommand.details());
 
         dilemmaPort.saveDilemma(dilemma);
+
+        eventProducerPort.sendDilemmaEdited(dilemma.getDilemmaId(), editCommand.title(), userId);
     }
 
     @Override
@@ -76,7 +82,9 @@ public class DilemmaService implements DilemmaUseCase {
         DilemmaDomain dilemma = dilemmaPort.getDilemma(user, createCommand.dilemmaId())
                 .orElseThrow(DilemmaNotFoundException::new);
 
-        dilemmaDiscussionPort.createDilemmaDiscussion(user, dilemma, createCommand.content());
+        Long discussionId = dilemmaDiscussionPort.createDilemmaDiscussion(user, dilemma, createCommand.content());
+
+        eventProducerPort.sendDiscussionCreated(dilemma.getDilemmaId(), discussionId, dilemma.getTitle(), userId);
     }
 
     @Override
@@ -110,6 +118,8 @@ public class DilemmaService implements DilemmaUseCase {
 
         issue.changeStatus(IssueStatus.PENDING);
         issuePort.saveIssue(issue);
+
+        eventProducerPort.sendDilemmaClosed(dilemma.getDilemmaId(), dilemma.getTitle(), null);
     }
 
     @Override

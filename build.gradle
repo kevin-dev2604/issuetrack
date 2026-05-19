@@ -49,6 +49,9 @@ dependencies {
 	// Redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+	// kafka
+	implementation 'org.springframework.kafka:spring-kafka'
+
 	// datasource-proxy for logging
 	implementation "net.ttddyy:datasource-proxy:1.11.0"
 

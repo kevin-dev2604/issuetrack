@@ -21,7 +21,7 @@ public class FakeDilemmaPort implements DilemmaPort, FakePort {
     private final Map<Long, DilemmaDomain> dilemmaList = new HashMap<>();
 
     @Override
-    public void createDilemma(DilemmaCreateCommand createCommand) {
+    public Long createDilemma(DilemmaCreateCommand createCommand) {
         Long dilemmaId = newId();
         dilemmaList.put(
                 dilemmaId,
@@ -35,6 +35,8 @@ public class FakeDilemmaPort implements DilemmaPort, FakePort {
                         null
                 )
         );
+
+        return dilemmaId;
     }
 
     @Override

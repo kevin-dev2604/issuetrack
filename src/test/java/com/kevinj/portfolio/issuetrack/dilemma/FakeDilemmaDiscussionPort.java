@@ -19,9 +19,8 @@ public class FakeDilemmaDiscussionPort implements DilemmaDiscussionPort, FakePor
     private final SystemTimeProvider systemTimeProvider = new SystemTimeProvider();
 
     @Override
-    public void createDilemmaDiscussion(User user, DilemmaDomain dilemma, String content) {
+    public Long createDilemmaDiscussion(User user, DilemmaDomain dilemma, String content) {
         Long discussionId = newId();
-
 
         DilemmaDiscussionDomain newDiscussion = new DilemmaDiscussionDomain(
                 discussionId,
@@ -33,6 +32,8 @@ public class FakeDilemmaDiscussionPort implements DilemmaDiscussionPort, FakePor
         );
 
         dilemmaDiscussionDomainList.put(discussionId, newDiscussion);
+
+        return discussionId;
     }
 
     @Override

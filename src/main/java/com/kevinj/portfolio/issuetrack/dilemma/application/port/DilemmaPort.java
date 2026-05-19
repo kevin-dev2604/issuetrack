@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 import java.util.Optional;
 
 public interface DilemmaPort {
-    void createDilemma(DilemmaCreateCommand createCommand);
+    Long createDilemma(DilemmaCreateCommand createCommand);
     Optional<DilemmaDomain> getDilemma(User user, Long dilemmaId);
     Optional<DilemmaDomain> getDilemmaUnscoped(Long dilemmaId);
     void saveDilemma(DilemmaDomain dilemmaDomain);

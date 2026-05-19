@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DilemmaDiscussionPort {
-    void createDilemmaDiscussion(User user, DilemmaDomain dilemma, String content);
+    Long createDilemmaDiscussion(User user, DilemmaDomain dilemma, String content);
     void editDilemmaDiscussion(DilemmaDiscussionDomain domain);
     void deleteDilemmaDiscussion(Long discussionId);
     List<DilemmaDiscussionInfo> getDilemmaDiscussionList(Long dilemmaId);
