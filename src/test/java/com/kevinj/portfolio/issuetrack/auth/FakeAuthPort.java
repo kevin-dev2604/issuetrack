@@ -37,7 +37,7 @@ public class FakeAuthPort implements AuthPort {
 
         refreshTokenStore.save(user.getUserId(), refreshToken, Duration.ofDays(14));
 
-        return new  LoginResponse(accessToken, refreshToken);
+        return new  LoginResponse(accessToken, refreshToken, user.getUserRole().systemRole());
     }
 
     @Override

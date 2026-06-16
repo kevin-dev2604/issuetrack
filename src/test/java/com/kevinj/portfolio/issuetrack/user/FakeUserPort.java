@@ -27,6 +27,7 @@ public class FakeUserPort implements UserPort, FakePort {
                 user.getNickname(),
                 user.getEmail(),
                 user.getDetails(),
+                user.getProvider(),
                 user.getIsUse(),
                 user.getLoginFailCnt()
         );
@@ -53,6 +54,11 @@ public class FakeUserPort implements UserPort, FakePort {
                 .stream()
                 .filter(user -> user.getEmail().equals(email))
                 .findAny();
+    }
+
+    @Override
+    public Optional<User> loadByProvider(String email, String provider) {
+        throw new UnsupportedOperationException("Warning: Not supported in test environments (e.g., Fake Ports). Use only for the actual running application.");
     }
 
     @Override

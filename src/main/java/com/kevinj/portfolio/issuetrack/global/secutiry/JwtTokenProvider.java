@@ -15,6 +15,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -46,13 +48,14 @@ public class JwtTokenProvider implements TokenProvider {
 
     @Override
     public String createAccessToken(String loginId, Long userId, String role) {
-        Claims claims = Jwts.claims().subject(String.valueOf(userId)).build();
-        claims.put("login_id", loginId);
-        claims.put("role", role);
+        Map<String, Object> claimsMap = new HashMap<>();
+        claimsMap.put("login_id", loginId);
+        claimsMap.put("role", role);
 
         Instant now = Instant.now();
         return Jwts.builder()
-                .claims(claims)
+                .subject(String.valueOf(userId))
+                .claims(claimsMap)
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(now.plus(accessTtl)))
                 .signWith(key, Jwts.SIG.HS256)
@@ -61,11 +64,12 @@ public class JwtTokenProvider implements TokenProvider {
 
     @Override
     public String createRefreshToken(Long userId) {
-        Claims claims = Jwts.claims().subject(String.valueOf(userId)).build();
+        Map<String, Object> claimsMap = new HashMap<>();
 
         Instant now = Instant.now();
         return Jwts.builder()
-                .claims(claims)
+                .subject(String.valueOf(userId))
+                .claims(claimsMap)
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(now.plus(refreshTtl)))
                 .signWith(key, Jwts.SIG.HS256)

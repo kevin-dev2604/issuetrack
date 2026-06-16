@@ -22,6 +22,7 @@ import com.kevinj.portfolio.issuetrack.user.exception.UserException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -69,6 +70,13 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(statusCode)
                 .body(getBody(statusCode, errorCode.name(), errorCode.message(), request));
+    }
+
+    @ExceptionHandler(OAuth2AuthenticationException.class)
+    public ResponseEntity<ErrorResponse> handleOAuth2Exceptions(Exception ex, HttpServletRequest request) {
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+        return ResponseEntity.status(httpStatus.value())
+                .body(getBody(httpStatus.value(), httpStatus.name(), httpStatus.getReasonPhrase(), request));
     }
 
     @ExceptionHandler(Exception.class)

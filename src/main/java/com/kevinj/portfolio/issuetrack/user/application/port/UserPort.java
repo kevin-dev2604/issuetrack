@@ -10,6 +10,7 @@ public interface UserPort {
     Optional<User> loadById(Long userId);
     Optional<User> loadLoginUser(String loginId);
     Optional<User> loadByEmail(String loginId);
+    Optional<User> loadByProvider(String email, String provider);
     ServiceDomain loadServiceInfo(Long userId);
     void save(User user);
 }

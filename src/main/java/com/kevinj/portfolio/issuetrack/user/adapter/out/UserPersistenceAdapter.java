@@ -62,6 +62,17 @@ public class UserPersistenceAdapter implements UserPort {
     }
 
     @Override
+    public Optional<User> loadByProvider(String email, String provider) {
+        Optional<Users> users =  jpaUserRepository.findByEmailAndProvider(email, provider);
+
+        if (users.isEmpty() || !isServiceUser(users.get().getUserId())) {
+            return Optional.empty();
+        }
+
+        return users.map(userMapper::toUserDomain);
+    }
+
+    @Override
     public ServiceDomain loadServiceInfo(Long userId) {
         ServiceUsageId serviceId = new ServiceUsageId(userId, serviceMapper.getServiceName());
         Optional<ServiceUsage> service = jpaServiceUsageRepository.findById(serviceId);

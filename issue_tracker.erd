@@ -4,8 +4,8 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -740,
-    "scrollLeft": -133.3333,
+    "scrollTop": -440,
+    "scrollLeft": -33.3333,
     "zoomLevel": 0.91,
     "show": 447,
     "database": 16,
@@ -78,6 +78,7 @@
           "bTJFicmCx3RYkRjyKgRx7",
           "DF3GCIGCIegynHB822tZJ",
           "KEOU33kjHhCWcjGNQ3Um4",
+          "VE6fHD3ltu277aZ1nAoro",
           "CPz2p58mjMidgOWSJa97C",
           "4gHy4J5e-9yqN5hEMJDUJ"
         ],
@@ -91,6 +92,7 @@
           "bTJFicmCx3RYkRjyKgRx7",
           "DF3GCIGCIegynHB822tZJ",
           "KEOU33kjHhCWcjGNQ3Um4",
+          "VE6fHD3ltu277aZ1nAoro",
           "CPz2p58mjMidgOWSJa97C",
           "4gHy4J5e-9yqN5hEMJDUJ"
         ],
@@ -103,7 +105,7 @@
           "color": ""
         },
         "meta": {
-          "updateAt": 1775674939337,
+          "updateAt": 1781587513489,
           "createAt": 1773734662462
         }
       },
@@ -2393,6 +2395,26 @@
           "updateAt": 1776173310921,
           "createAt": 1776173285463
         }
+      },
+      "VE6fHD3ltu277aZ1nAoro": {
+        "id": "VE6fHD3ltu277aZ1nAoro",
+        "tableId": "ZxnlQOL29dhQI-n-Ij1_Q",
+        "name": "provider",
+        "comment": "oauth2 provider",
+        "dataType": "varchar",
+        "default": "",
+        "options": 0,
+        "ui": {
+          "keys": 0,
+          "widthName": 60,
+          "widthComment": 87,
+          "widthDataType": 60,
+          "widthDefault": 60
+        },
+        "meta": {
+          "updateAt": 1781587493197,
+          "createAt": 1781587454210
+        }
       }
     },
     "relationshipEntities": {
@@ -2407,7 +2429,7 @@
             "x6zAV3preK1gvrsk5qEPS"
           ],
           "x": 183.9112333333333,
-          "y": 915.6575,
+          "y": 939.6575,
           "direction": 8
         },
         "end": {
@@ -2463,7 +2485,7 @@
             "x6zAV3preK1gvrsk5qEPS"
           ],
           "x": 509.2445666666666,
-          "y": 915.6575,
+          "y": 939.6575,
           "direction": 8
         },
         "end": {
@@ -2519,7 +2541,7 @@
             "x6zAV3preK1gvrsk5qEPS"
           ],
           "x": 590.5779,
-          "y": 755.6575,
+          "y": 767.6575,
           "direction": 2
         },
         "end": {
@@ -2659,7 +2681,7 @@
             "x6zAV3preK1gvrsk5qEPS"
           ],
           "x": 346.5779,
-          "y": 915.6575,
+          "y": 939.6575,
           "direction": 8
         },
         "end": {

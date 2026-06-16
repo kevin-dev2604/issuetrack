@@ -11,6 +11,7 @@ import com.example.jooq.tables.DilemmaDiscussion;
 import com.example.jooq.tables.Issue;
 import com.example.jooq.tables.IssueAttributes;
 import com.example.jooq.tables.LoginLog;
+import com.example.jooq.tables.Notification;
 import com.example.jooq.tables.Process;
 import com.example.jooq.tables.ServiceUsage;
 import com.example.jooq.tables.Step;
@@ -57,6 +58,11 @@ public class Tables {
      * The table <code>issuetrack.login_log</code>.
      */
     public static final LoginLog LOGIN_LOG = LoginLog.LOGIN_LOG;
+
+    /**
+     * User notifications
+     */
+    public static final Notification NOTIFICATION = Notification.NOTIFICATION;
 
     /**
      * The table <code>issuetrack.process</code>.

@@ -35,7 +35,8 @@ public class UserService implements UserUseCase {
                 encodedPassword,
                 command.nickname(),
                 command.email(),
-                command.details()
+                command.details(),
+                command.provider()
         );
 
         userPort.create(user);

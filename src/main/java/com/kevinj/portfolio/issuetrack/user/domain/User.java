@@ -16,6 +16,7 @@ public class User {
     private String nickname;
     private String email;
     private String details;
+    private String provider;
     private YN isUse;
     private Integer loginFailCnt;
 
@@ -33,8 +34,8 @@ public class User {
         this.loginPw = newPassword;
     }
 
-    public static User create(String loginId, String loginPw, String nickname, String email, String details) {
-        return new User(null, loginId, loginPw, UserRole.USER, nickname, email, details, YN.Y, 0);
+    public static User create(String loginId, String loginPw, String nickname, String email, String details, String provider) {
+        return new User(null, loginId, loginPw, UserRole.USER, nickname, email, details, provider, YN.Y, 0);
     }
 
     public void addLoginFailCnt() {

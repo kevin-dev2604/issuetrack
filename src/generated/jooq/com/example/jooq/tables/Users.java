@@ -9,6 +9,7 @@ import com.example.jooq.Keys;
 import com.example.jooq.tables.DilemmaDiscussion.DilemmaDiscussionPath;
 import com.example.jooq.tables.Issue.IssuePath;
 import com.example.jooq.tables.LoginLog.LoginLogPath;
+import com.example.jooq.tables.Notification.NotificationPath;
 import com.example.jooq.tables.Process.ProcessPath;
 import com.example.jooq.tables.ServiceUsage.ServiceUsagePath;
 import com.example.jooq.tables.records.UsersRecord;
@@ -115,6 +116,11 @@ public class Users extends TableImpl<UsersRecord> {
      */
     public final TableField<UsersRecord, Integer> LOGIN_FAIL_CNT = createField(DSL.name("login_fail_cnt"), SQLDataType.INTEGER.nullable(false).defaultValue(DSL.field(DSL.raw("0"), SQLDataType.INTEGER)), this, "");
 
+    /**
+     * The column <code>issuetrack.users.provider</code>.
+     */
+    public final TableField<UsersRecord, String> PROVIDER = createField(DSL.name("provider"), SQLDataType.VARCHAR, this, "");
+
     private Users(Name alias, Table<UsersRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }
@@ -203,6 +209,19 @@ public class Users extends TableImpl<UsersRecord> {
             _dilemmaDiscussion = new DilemmaDiscussionPath(this, null, Keys.DILEMMA_DISCUSSION__DILEMMA_DISCUSSION_USERS_FK.getInverseKey());
 
         return _dilemmaDiscussion;
+    }
+
+    private transient NotificationPath _notification;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>issuetrack.notification</code> table
+     */
+    public NotificationPath notification() {
+        if (_notification == null)
+            _notification = new NotificationPath(this, null, Keys.NOTIFICATION__FK_USER_TO_NOTIFICATION.getInverseKey());
+
+        return _notification;
     }
 
     private transient IssuePath _issue;

@@ -11,6 +11,7 @@ import com.example.jooq.tables.DilemmaDiscussion;
 import com.example.jooq.tables.Issue;
 import com.example.jooq.tables.IssueAttributes;
 import com.example.jooq.tables.LoginLog;
+import com.example.jooq.tables.Notification;
 import com.example.jooq.tables.Process;
 import com.example.jooq.tables.ServiceUsage;
 import com.example.jooq.tables.Step;
@@ -73,6 +74,11 @@ public class Issuetrack extends SchemaImpl {
     public final LoginLog LOGIN_LOG = LoginLog.LOGIN_LOG;
 
     /**
+     * User notifications
+     */
+    public final Notification NOTIFICATION = Notification.NOTIFICATION;
+
+    /**
      * The table <code>issuetrack.process</code>.
      */
     public final Process PROCESS = Process.PROCESS;
@@ -115,6 +121,7 @@ public class Issuetrack extends SchemaImpl {
             Issue.ISSUE,
             IssueAttributes.ISSUE_ATTRIBUTES,
             LoginLog.LOGIN_LOG,
+            Notification.NOTIFICATION,
             Process.PROCESS,
             ServiceUsage.SERVICE_USAGE,
             Step.STEP,

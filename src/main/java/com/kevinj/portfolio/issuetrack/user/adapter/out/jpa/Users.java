@@ -34,6 +34,8 @@ public class Users extends BaseTimeEntity {
 
     private String details;
 
+    private String provider;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 1)
     private YN isUse;
@@ -41,13 +43,14 @@ public class Users extends BaseTimeEntity {
     @Column(nullable = false)
     private Integer loginFailCnt;
 
-    public Users(String loginId, String loginPw, UserRole userRole, String nickname, String email, String details, YN isUse, Integer loginFailCnt) {
+    public Users(String loginId, String loginPw, UserRole userRole, String nickname, String email, String details, String provider, YN isUse, Integer loginFailCnt) {
         this.loginId = loginId;
         this.loginPw = loginPw;
         this.userRole = userRole;
         this.nickname = nickname;
         this.email = email;
         this.details = details;
+        this.provider = provider;
         this.isUse = isUse;
         this.loginFailCnt = loginFailCnt;
     }

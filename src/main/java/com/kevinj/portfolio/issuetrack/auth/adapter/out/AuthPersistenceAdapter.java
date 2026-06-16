@@ -43,7 +43,7 @@ public class AuthPersistenceAdapter implements AuthPort {
         log.debug("refresh toekn: " + refreshToken);
         log.debug("===================================================================");
 
-        return new LoginResponse(accessToken, refreshToken);
+        return new LoginResponse(accessToken, refreshToken, user.getUserRole().systemRole());
     }
 
     @Override

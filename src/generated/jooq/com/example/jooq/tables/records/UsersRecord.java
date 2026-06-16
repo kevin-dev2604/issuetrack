@@ -174,6 +174,20 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> {
         return (Integer) get(10);
     }
 
+    /**
+     * Setter for <code>issuetrack.users.provider</code>.
+     */
+    public void setProvider(String value) {
+        set(11, value);
+    }
+
+    /**
+     * Getter for <code>issuetrack.users.provider</code>.
+     */
+    public String getProvider() {
+        return (String) get(11);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -197,7 +211,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> {
     /**
      * Create a detached, initialised UsersRecord
      */
-    public UsersRecord(Long userId, String loginId, String loginPw, String userRole, String nickname, String email, String details, OffsetDateTime createdAt, OffsetDateTime updatedAt, String isUse, Integer loginFailCnt) {
+    public UsersRecord(Long userId, String loginId, String loginPw, String userRole, String nickname, String email, String details, OffsetDateTime createdAt, OffsetDateTime updatedAt, String isUse, Integer loginFailCnt, String provider) {
         super(Users.USERS);
 
         setUserId(userId);
@@ -211,6 +225,7 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> {
         setUpdatedAt(updatedAt);
         setIsUse(isUse);
         setLoginFailCnt(loginFailCnt);
+        setProvider(provider);
         resetChangedOnNotNull();
     }
 }

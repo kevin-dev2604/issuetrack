@@ -16,6 +16,7 @@ public class UserMapper {
             user.getNickname(),
             user.getEmail(),
             user.getDetails(),
+            user.getProvider(),
             user.getIsUse(),
             user.getLoginFailCnt()
         );
@@ -30,6 +31,7 @@ public class UserMapper {
             users.getNickname(),
             users.getEmail(),
             users.getDetails(),
+            users.getProvider(),
             users.getIsUse(),
             users.getLoginFailCnt()
         );

@@ -35,4 +35,7 @@ public class SecurityUserDetails implements UserDetails, Serializable {
         return loginId;
     }
 
+    public UserRole getRole() {
+        return role;
+    }
 }

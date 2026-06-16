@@ -1,4 +1,4 @@
-package com.kevinj.portfolio.issuetrack.auth.application;
+package com.kevinj.portfolio.issuetrack.auth.application.usecase;
 
 import com.kevinj.portfolio.issuetrack.auth.application.dto.RefreshCommand;
 import com.kevinj.portfolio.issuetrack.auth.application.dto.RefreshResponse;

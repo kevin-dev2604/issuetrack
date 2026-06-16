@@ -22,7 +22,8 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserDetailsService userDetailsService;
-//    private final PasswordEncoder passwordEncoder;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) {
@@ -32,7 +33,7 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**").permitAll()
-                        .requestMatchers("/users/signup", "/auth/**").permitAll()
+                        .requestMatchers("/users/signup", "/auth/**", "/oauth2/**").permitAll()
                         .requestMatchers("/admin/**").hasRole(UserRole.ADMIN.name())
                         .requestMatchers("/process/**", "/issue/**", "/dilemma/user/*").hasRole(UserRole.USER.name())
                         .requestMatchers(HttpMethod.GET, "/dilemma/search").permitAll()
@@ -43,6 +44,12 @@ public class SecurityConfig {
                                 regexMatcher(HttpMethod.POST, "^/dilemma/[0-9]+/close$")
                         ).hasRole(UserRole.DILEMMA.name())
                         .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                    .userInfoEndpoint(userInfo -> userInfo
+                        .userService(customOAuth2UserService)
+                    )
+                    .successHandler(oAuth2AuthenticationSuccessHandler)
                 )
                 .httpBasic(Customizer.withDefaults())
                 .userDetailsService(userDetailsService);

@@ -5,6 +5,7 @@ public record UserCreateCommand(
         String loginPw,
         String nickname,
         String email,
-        String details
+        String details,
+        String provider
 ) {
 }
