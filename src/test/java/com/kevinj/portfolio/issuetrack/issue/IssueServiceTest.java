@@ -72,6 +72,7 @@ public class IssueServiceTest {
                         "tester 1",
                         "tester1@kevinj.com",
                         "",
+                        null,
                         YN.Y,
                         0
                 )

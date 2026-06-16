@@ -37,6 +37,7 @@ public class ProcessServiceTest {
                 "Test user 1",
                 "test1@kevinj.com",
                 "",
+                null,
                 YN.Y,
                 0
         );
@@ -50,6 +51,7 @@ public class ProcessServiceTest {
                 "Test user 2",
                 "test2@kevinj.com",
                 "",
+                null,
                 YN.Y,
                 0
         );

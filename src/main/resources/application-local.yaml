@@ -2,6 +2,7 @@ spring:
   config:
     activate:
       on-profile: local
+
   security:
     oauth2:
       client:
@@ -12,6 +13,12 @@ spring:
             scope:
               - profile
               - email
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+            scope:
+              - read:user
+              - user:email # 🌟 이 권한이 있어야 비공개 이메일 주소 전용 API에 접근할 수 있습니다.
 
   datasource:
     url: jdbc:postgresql://localhost:5432/devdb

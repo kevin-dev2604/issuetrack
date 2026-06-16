@@ -53,6 +53,7 @@ public class DilemmaServiceTest {
                         "tester 1",
                         "tester1@kevinj.com",
                         "",
+                        null,
                         YN.Y,
                         0
                 )
@@ -257,6 +258,7 @@ public class DilemmaServiceTest {
                         "Eren Jäger",
                         "eren@surveycorps.com",
                         "",
+                        null,
                         YN.Y,
                         0
                 )

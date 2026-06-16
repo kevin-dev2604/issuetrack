@@ -1,6 +1,5 @@
 package com.kevinj.portfolio.issuetrack.user.application.port;
 
-import com.kevinj.portfolio.issuetrack.user.domain.ServiceDomain;
 import com.kevinj.portfolio.issuetrack.user.domain.User;
 
 import java.util.Optional;
@@ -11,6 +10,5 @@ public interface UserPort {
     Optional<User> loadLoginUser(String loginId);
     Optional<User> loadByEmail(String loginId);
     Optional<User> loadByProvider(String email, String provider);
-    ServiceDomain loadServiceInfo(Long userId);
     void save(User user);
 }

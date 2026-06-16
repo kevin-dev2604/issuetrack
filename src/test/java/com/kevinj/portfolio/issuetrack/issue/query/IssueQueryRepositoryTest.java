@@ -202,6 +202,7 @@ public class IssueQueryRepositoryTest {
             "kevin.j",
             "ohmy@kevinj.com",
             "account for search test cases",
+            null,
             YN.Y,
             0
         ));

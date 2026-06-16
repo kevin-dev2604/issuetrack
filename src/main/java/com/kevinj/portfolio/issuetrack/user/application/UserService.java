@@ -7,7 +7,6 @@ import com.kevinj.portfolio.issuetrack.user.application.dto.UserInfoResponse;
 import com.kevinj.portfolio.issuetrack.user.application.dto.UserPasswordCommand;
 import com.kevinj.portfolio.issuetrack.user.application.dto.UserUpdateCommand;
 import com.kevinj.portfolio.issuetrack.user.application.port.UserPort;
-import com.kevinj.portfolio.issuetrack.user.domain.ServiceDomain;
 import com.kevinj.portfolio.issuetrack.user.domain.User;
 import com.kevinj.portfolio.issuetrack.user.exception.*;
 import lombok.RequiredArgsConstructor;
@@ -129,11 +128,6 @@ public class UserService implements UserUseCase {
                 .orElseThrow(NotFoundUserException::new);
 
         return new UserInfoResponse(user.getLoginId(),  user.getNickname(), user.getEmail(), user.getDetails());
-    }
-
-    @Override
-    public ServiceDomain getServiceInfo(Long userId) {
-        return userPort.loadServiceInfo(userId);
     }
 
     @Override

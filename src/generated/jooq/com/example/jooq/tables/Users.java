@@ -11,7 +11,6 @@ import com.example.jooq.tables.Issue.IssuePath;
 import com.example.jooq.tables.LoginLog.LoginLogPath;
 import com.example.jooq.tables.Notification.NotificationPath;
 import com.example.jooq.tables.Process.ProcessPath;
-import com.example.jooq.tables.ServiceUsage.ServiceUsagePath;
 import com.example.jooq.tables.records.UsersRecord;
 
 import java.time.OffsetDateTime;
@@ -261,19 +260,6 @@ public class Users extends TableImpl<UsersRecord> {
             _process = new ProcessPath(this, null, Keys.PROCESS__PROCESS_USERS_FK.getInverseKey());
 
         return _process;
-    }
-
-    private transient ServiceUsagePath _serviceUsage;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>issuetrack.service_usage</code> table
-     */
-    public ServiceUsagePath serviceUsage() {
-        if (_serviceUsage == null)
-            _serviceUsage = new ServiceUsagePath(this, null, Keys.SERVICE_USAGE__SERVICE_USAGE_USER_FK.getInverseKey());
-
-        return _serviceUsage;
     }
 
     @Override

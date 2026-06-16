@@ -30,7 +30,8 @@ public class UserServiceTest {
                 "qwer12345%^",
                 "tester 1",
                 "test@kevinj.com",
-                ""
+                "",
+                null
         );
 
         userService.signUp(userCreateCommand);
@@ -57,7 +58,8 @@ public class UserServiceTest {
                         "invalidpw@",
                         "invalid user",
                         "invalid@kevinj.com",
-                        ""
+                        "",
+                        null
                 )
         )).isInstanceOf(NoLoginIdInputException.class);
 
@@ -67,7 +69,8 @@ public class UserServiceTest {
                         " ",
                         "invalid user",
                         "invalid@kevinj.com",
-                        ""
+                        "",
+                        null
                 )
         )).isInstanceOf(NoPasswordInputException.class);
 
@@ -77,7 +80,8 @@ public class UserServiceTest {
                         "invalidpw@",
                         "",
                         "invalid@kevinj.com",
-                        ""
+                        "",
+                        null
                 )
         )).isInstanceOf(NoNicknameInputException.class);
 
@@ -87,7 +91,8 @@ public class UserServiceTest {
                         "invalidpw@",
                         "invalid user",
                         "",
-                        ""
+                        "",
+                        null
                 )
         )).isInstanceOf(NoEmailInputException.class);
 
@@ -101,7 +106,8 @@ public class UserServiceTest {
                 originalPwd,
                 "another tester",
                 "test2@kevinj.com",
-                ""
+                "",
+                null
         );
 
         userService.signUp(userCreateCommand);
@@ -120,7 +126,8 @@ public class UserServiceTest {
                 "swq23%",
                 "another tester",
                 "test2@kevinj.com",
-                ""
+                "",
+                null
         );
 
         assertThatThrownBy(() -> userService.signUp(userCreateCommand))
@@ -134,7 +141,8 @@ public class UserServiceTest {
                 "qwe123^",
                 "same email",
                 "test@kevinj.com",
-                ""
+                "",
+                null
         );
 
         assertThatThrownBy(() -> userService.signUp(userCreateCommand))
@@ -155,7 +163,8 @@ public class UserServiceTest {
                 rawPassword,
                 "another tester",
                 email,
-                ""
+                "",
+                null
         );
 
         assertThatThrownBy(() -> userService.signUp(userCreateCommand))
@@ -169,7 +178,8 @@ public class UserServiceTest {
                 rawPassword,
                 "another tester 2",
                 email,
-                ""
+                "",
+                null
         );
 
         assertThatThrownBy(() -> userService.signUp(userCreateCommand2))
@@ -186,7 +196,8 @@ public class UserServiceTest {
                 "swq23%",
                 "tester",
                 "test1@kevinj.com",
-                ""
+                "",
+                null
         );
 
         assertThatThrownBy(() -> userService.signUp(userCreateCommand))

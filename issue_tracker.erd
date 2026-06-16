@@ -4,7 +4,7 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -440,
+    "scrollTop": -300,
     "scrollLeft": -33.3333,
     "zoomLevel": 0.91,
     "show": 447,
@@ -32,7 +32,6 @@
   "doc": {
     "tableIds": [
       "ZxnlQOL29dhQI-n-Ij1_Q",
-      "Nuj_v-calItd7PQ9H5aCb",
       "e_MGS9mM6ZEiK4Qxeh9bK",
       "4EZAlx_DTlZ7aMxln4fNd",
       "89k14wRBug5BnhmUbW3AF",
@@ -44,7 +43,6 @@
       "HsKAm0cXLQo2dMR9JvhhH"
     ],
     "relationshipIds": [
-      "FXVVJVgm5DDbUTrEOSu6Q",
       "IPrVUqyDzDAyFcF8e1-KL",
       "AifxA5ZpLVoJ2-wrdz22d",
       "LO4xNkDTfEHrGuPGqt7mg",
@@ -645,7 +643,7 @@
         "default": "",
         "options": 10,
         "ui": {
-          "keys": 3,
+          "keys": 1,
           "widthName": 60,
           "widthComment": 60,
           "widthDataType": 60,

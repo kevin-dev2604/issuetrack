@@ -38,6 +38,7 @@ public class StepServiceTest {
                 "Test user 1",
                 "test1@kevinj.com",
                 "",
+                null,
                 YN.Y,
                 0
         );

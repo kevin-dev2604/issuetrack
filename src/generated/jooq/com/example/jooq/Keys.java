@@ -13,7 +13,6 @@ import com.example.jooq.tables.IssueAttributes;
 import com.example.jooq.tables.LoginLog;
 import com.example.jooq.tables.Notification;
 import com.example.jooq.tables.Process;
-import com.example.jooq.tables.ServiceUsage;
 import com.example.jooq.tables.Step;
 import com.example.jooq.tables.Users;
 import com.example.jooq.tables.records.AttributesRecord;
@@ -25,7 +24,6 @@ import com.example.jooq.tables.records.IssueRecord;
 import com.example.jooq.tables.records.LoginLogRecord;
 import com.example.jooq.tables.records.NotificationRecord;
 import com.example.jooq.tables.records.ProcessRecord;
-import com.example.jooq.tables.records.ServiceUsageRecord;
 import com.example.jooq.tables.records.StepRecord;
 import com.example.jooq.tables.records.UsersRecord;
 
@@ -76,6 +74,5 @@ public class Keys {
     public static final ForeignKey<LoginLogRecord, UsersRecord> LOGIN_LOG__LOGIN_LOG_USERS_FK = Internal.createForeignKey(LoginLog.LOGIN_LOG, DSL.name("login_log_users_fk"), new TableField[] { LoginLog.LOGIN_LOG.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.USER_ID }, true);
     public static final ForeignKey<NotificationRecord, UsersRecord> NOTIFICATION__FK_USER_TO_NOTIFICATION = Internal.createForeignKey(Notification.NOTIFICATION, DSL.name("fk_user_to_notification"), new TableField[] { Notification.NOTIFICATION.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.USER_ID }, true);
     public static final ForeignKey<ProcessRecord, UsersRecord> PROCESS__PROCESS_USERS_FK = Internal.createForeignKey(Process.PROCESS, DSL.name("process_users_fk"), new TableField[] { Process.PROCESS.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.USER_ID }, true);
-    public static final ForeignKey<ServiceUsageRecord, UsersRecord> SERVICE_USAGE__SERVICE_USAGE_USER_FK = Internal.createForeignKey(ServiceUsage.SERVICE_USAGE, DSL.name("service_usage_user_fk"), new TableField[] { ServiceUsage.SERVICE_USAGE.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.USER_ID }, true);
     public static final ForeignKey<StepRecord, ProcessRecord> STEP__STEP_PROCESS_FK = Internal.createForeignKey(Step.STEP, DSL.name("step_process_fk"), new TableField[] { Step.STEP.PROCESS_ID }, Keys.PROCESS_PKEY, new TableField[] { Process.PROCESS.PROCESS_ID }, true);
 }

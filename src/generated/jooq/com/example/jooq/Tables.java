@@ -13,7 +13,6 @@ import com.example.jooq.tables.IssueAttributes;
 import com.example.jooq.tables.LoginLog;
 import com.example.jooq.tables.Notification;
 import com.example.jooq.tables.Process;
-import com.example.jooq.tables.ServiceUsage;
 import com.example.jooq.tables.Step;
 import com.example.jooq.tables.Users;
 
@@ -68,11 +67,6 @@ public class Tables {
      * The table <code>issuetrack.process</code>.
      */
     public static final Process PROCESS = Process.PROCESS;
-
-    /**
-     * The table <code>issuetrack.service_usage</code>.
-     */
-    public static final ServiceUsage SERVICE_USAGE = ServiceUsage.SERVICE_USAGE;
 
     /**
      * The table <code>issuetrack.step</code>.

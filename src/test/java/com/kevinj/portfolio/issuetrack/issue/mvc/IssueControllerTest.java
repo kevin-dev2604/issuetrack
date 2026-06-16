@@ -54,7 +54,7 @@ class IssueControllerTest {
     @BeforeEach
     void setUp() {
         SecurityUserDetails mockUser = new SecurityUserDetails(
-            1L, "ohmykevin", "password", UserRole.USER
+            1L, "ohmykevin", "password", UserRole.USER, null
         );
 
         given(userDetailsService.loadUserByUsername(anyString())).willReturn(mockUser);

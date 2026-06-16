@@ -16,10 +16,12 @@ public class SecurityUserDetailsService implements UserDetailsService {
     private final JpaUserRepository jpaUserRepository;
 
     @Override
-    public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-        Users user = jpaUserRepository.findByLoginId(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User\'s login id not found: " + username));
+    public UserDetails loadUserByUsername(@NonNull String userId) throws UsernameNotFoundException {
+        Users user = jpaUserRepository.findById(Long.valueOf(userId))
+                .orElseThrow(() -> new UsernameNotFoundException("User\'s user id not found: " + userId));
 
-        return new SecurityUserDetails(user.getUserId(), user.getLoginId(), user.getLoginPw(), user.getUserRole());
+        return new SecurityUserDetails(user.getUserId(), user.getLoginId(), user.getLoginPw(), user.getUserRole(), user.getProvider());
     }
+
+
 }

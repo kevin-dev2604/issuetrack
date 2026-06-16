@@ -17,7 +17,8 @@ public class WithMockCustomUserSecurityContextFactory implements WithSecurityCon
             annotation.id(),
             annotation.loginId(),
             "password",
-            annotation.role()
+            annotation.role(),
+            null
         );
 
         // 2. Create Authentication object

@@ -1,10 +1,7 @@
 package com.kevinj.portfolio.issuetrack.user;
 
 import com.kevinj.portfolio.issuetrack.FakePort;
-import com.kevinj.portfolio.issuetrack.global.enums.YN;
-import com.kevinj.portfolio.issuetrack.user.adapter.out.UserServiceMapper;
 import com.kevinj.portfolio.issuetrack.user.application.port.UserPort;
-import com.kevinj.portfolio.issuetrack.user.domain.ServiceDomain;
 import com.kevinj.portfolio.issuetrack.user.domain.User;
 
 import java.util.HashMap;
@@ -14,7 +11,6 @@ import java.util.Optional;
 public class FakeUserPort implements UserPort, FakePort {
 
     private final Map<Long, User> userList = new HashMap<>();
-    private final UserServiceMapper serviceMapper = new UserServiceMapper();
 
     @Override
     public void create(User user) {
@@ -59,11 +55,6 @@ public class FakeUserPort implements UserPort, FakePort {
     @Override
     public Optional<User> loadByProvider(String email, String provider) {
         throw new UnsupportedOperationException("Warning: Not supported in test environments (e.g., Fake Ports). Use only for the actual running application.");
-    }
-
-    @Override
-    public ServiceDomain loadServiceInfo(Long userId) {
-        return new ServiceDomain(userId, serviceMapper.getServiceName(), YN.Y);
     }
 
     @Override

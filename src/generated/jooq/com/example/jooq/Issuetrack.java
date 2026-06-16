@@ -13,7 +13,6 @@ import com.example.jooq.tables.IssueAttributes;
 import com.example.jooq.tables.LoginLog;
 import com.example.jooq.tables.Notification;
 import com.example.jooq.tables.Process;
-import com.example.jooq.tables.ServiceUsage;
 import com.example.jooq.tables.Step;
 import com.example.jooq.tables.Users;
 
@@ -84,11 +83,6 @@ public class Issuetrack extends SchemaImpl {
     public final Process PROCESS = Process.PROCESS;
 
     /**
-     * The table <code>issuetrack.service_usage</code>.
-     */
-    public final ServiceUsage SERVICE_USAGE = ServiceUsage.SERVICE_USAGE;
-
-    /**
      * The table <code>issuetrack.step</code>.
      */
     public final Step STEP = Step.STEP;
@@ -123,7 +117,6 @@ public class Issuetrack extends SchemaImpl {
             LoginLog.LOGIN_LOG,
             Notification.NOTIFICATION,
             Process.PROCESS,
-            ServiceUsage.SERVICE_USAGE,
             Step.STEP,
             Users.USERS
         );

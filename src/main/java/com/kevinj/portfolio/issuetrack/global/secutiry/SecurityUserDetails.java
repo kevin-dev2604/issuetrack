@@ -18,7 +18,10 @@ public class SecurityUserDetails implements UserDetails, Serializable {
     private final Long userId;
     private final String loginId;
     private final String password;
+    @Getter
     private final UserRole role;
+    @Getter
+    private final String provider;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -33,9 +36,5 @@ public class SecurityUserDetails implements UserDetails, Serializable {
     @Override
     public String getUsername() {
         return loginId;
-    }
-
-    public UserRole getRole() {
-        return role;
     }
 }

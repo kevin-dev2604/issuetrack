@@ -51,6 +51,7 @@ public class AuthServiceTest {
                 "kevin",
                 "test@kevin.com",
                 "",
+                null,
                 YN.Y,
                 0
         ));
