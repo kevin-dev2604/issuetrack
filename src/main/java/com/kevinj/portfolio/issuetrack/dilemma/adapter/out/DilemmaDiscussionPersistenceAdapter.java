@@ -31,7 +31,7 @@ public class DilemmaDiscussionPersistenceAdapter implements DilemmaDiscussionPor
     private final DilemmaDiscussionMapper dilemmaDiscussionMapper;
 
     @Override
-    public void createDilemmaDiscussion(User user, DilemmaDomain dilemmaDomain, String content) {
+    public Long createDilemmaDiscussion(User user, DilemmaDomain dilemmaDomain, String content) {
         Dilemma dilemma = jpaDilemmaRepository.getReferenceById(dilemmaDomain.getDilemmaId());
         DilemmaDiscussion discussion = new DilemmaDiscussion(
                 null,
@@ -41,6 +41,7 @@ public class DilemmaDiscussionPersistenceAdapter implements DilemmaDiscussionPor
         );
 
         jpaDilemmaDiscussionRepository.save(discussion);
+        return discussion.getDiscussionId();
     }
 
     @Override
