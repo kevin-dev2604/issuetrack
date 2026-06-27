@@ -1,10 +1,14 @@
 package com.kevinj.portfolio.issuetrack.user;
 
 import com.kevinj.portfolio.issuetrack.FakePort;
+import com.kevinj.portfolio.issuetrack.user.adapter.out.jpa.UserDeviceToken;
+import com.kevinj.portfolio.issuetrack.user.application.dto.UserTokenCommand;
 import com.kevinj.portfolio.issuetrack.user.application.port.UserPort;
 import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.user.domain.UserDeviceTokenDomain;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -60,6 +64,26 @@ public class FakeUserPort implements UserPort, FakePort {
     @Override
     public void save(User user) {
         userList.put(user.getUserId(), user);
+    }
+
+    @Override
+    public void saveToken(User user, UserDeviceTokenDomain tokenDomain) {
+        throw new UnsupportedOperationException("Warning: Not supported in test environments (e.g., Fake Ports). Use only for the actual running application.");
+    }
+
+    @Override
+    public Optional<UserDeviceTokenDomain> findToken(User user, String deviceType) {
+        throw new UnsupportedOperationException("Warning: Not supported in test environments (e.g., Fake Ports). Use only for the actual running application.");
+    }
+
+    @Override
+    public List<String> findAllUserTokens(User user) {
+        throw new UnsupportedOperationException("Warning: Not supported in test environments (e.g., Fake Ports). Use only for the actual running application.");
+    }
+
+    @Override
+    public void deleteToken(String token) {
+        throw new UnsupportedOperationException("Warning: Not supported in test environments (e.g., Fake Ports). Use only for the actual running application.");
     }
 
 

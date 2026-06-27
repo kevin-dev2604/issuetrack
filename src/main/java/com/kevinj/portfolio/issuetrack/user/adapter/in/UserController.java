@@ -2,10 +2,7 @@ package com.kevinj.portfolio.issuetrack.user.adapter.in;
 
 import com.kevinj.portfolio.issuetrack.global.secutiry.SecurityUserDetails;
 import com.kevinj.portfolio.issuetrack.user.application.UserService;
-import com.kevinj.portfolio.issuetrack.user.application.dto.UserCreateCommand;
-import com.kevinj.portfolio.issuetrack.user.application.dto.UserInfoResponse;
-import com.kevinj.portfolio.issuetrack.user.application.dto.UserPasswordCommand;
-import com.kevinj.portfolio.issuetrack.user.application.dto.UserUpdateCommand;
+import com.kevinj.portfolio.issuetrack.user.application.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -73,6 +70,20 @@ public class UserController {
     public void changePassword(@AuthenticationPrincipal SecurityUserDetails userInfo,
                                                @RequestBody UserPasswordCommand userPasswordCommand) {
         userService.changePassword(userInfo.getUserId(), userPasswordCommand);
+    }
+
+    @Operation(
+        summary = "Register token",
+        description = "After created fcm token, front-end must send token by this API"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "success"),
+        @ApiResponse(responseCode = "404", description = "not found login user info"),
+    })
+    @PostMapping("/token")
+    public void registerToken(@AuthenticationPrincipal SecurityUserDetails userInfo,
+                              @RequestBody UserTokenCommand userTokenCommand) {
+        userService.registerToken(userInfo.getUserId(), userTokenCommand);
     }
 
     @Operation(

@@ -16,6 +16,7 @@ public enum UserErrorCode implements ErrorCode {
     WRONG_OLD_PASSWORD("No match old password."),
     WRONG_EMAIL("Wrong email address."),
     SAME_PASSWORD("New password is equal to old password."),
+    FCM_TOKEN_INVALID("Google FCM token invalid"),
     ;
 
     private final String message;

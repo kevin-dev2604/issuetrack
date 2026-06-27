@@ -1,7 +1,9 @@
 package com.kevinj.portfolio.issuetrack.user.adapter.out;
 
+import com.kevinj.portfolio.issuetrack.user.adapter.out.jpa.UserDeviceToken;
 import com.kevinj.portfolio.issuetrack.user.adapter.out.jpa.Users;
 import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.user.domain.UserDeviceTokenDomain;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +36,25 @@ public class UserMapper {
             users.getProvider(),
             users.getIsUse(),
             users.getLoginFailCnt()
+        );
+    }
+
+    public UserDeviceToken toTokenEntity(Users users, UserDeviceTokenDomain domain) {
+        return new UserDeviceToken(
+            users,
+            domain.getToken(),
+            domain.getDeviceType(),
+            domain.getLastLoggedInAt()
+        );
+    }
+
+    public UserDeviceTokenDomain toTokenDomain(UserDeviceToken entity) {
+        return new UserDeviceTokenDomain(
+            entity.getId(),
+            entity.getUsers().getUserId(),
+            entity.getToken(),
+            entity.getDeviceType(),
+            entity.getLastLoggedInAt()
         );
     }
 }

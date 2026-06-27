@@ -9,12 +9,19 @@ import com.kevinj.portfolio.issuetrack.auth.exception.PasswordDoNotMatchExceptio
 import com.kevinj.portfolio.issuetrack.auth.exception.RefreshTokenInvalidException;
 import com.kevinj.portfolio.issuetrack.auth.exception.UserNotFoundException;
 import com.kevinj.portfolio.issuetrack.global.enums.YN;
+import com.kevinj.portfolio.issuetrack.user.adapter.out.jpa.UserDeviceToken;
+import com.kevinj.portfolio.issuetrack.user.application.dto.UserTokenCommand;
 import com.kevinj.portfolio.issuetrack.user.application.port.UserPort;
 import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.user.domain.UserDeviceTokenDomain;
+import com.kevinj.portfolio.issuetrack.user.exception.FcmTokenInvalidException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -37,7 +44,27 @@ public class AuthService implements LoginUseCase, RefreshUseCase {
                 throw new PasswordDoNotMatchException();
             } else if (user.getIsUse().equals(YN.N)) {
                 throw new UserNotFoundException();
+            } else if (loginCommand.tokenInfo() == null ||
+                StringUtils.isBlank(loginCommand.tokenInfo().token()) ||
+                StringUtils.isBlank(loginCommand.tokenInfo().deviceType())) {
+                throw new FcmTokenInvalidException();
             }
+
+            UserTokenCommand tokenInfo = loginCommand.tokenInfo();
+            UserDeviceTokenDomain tokenDomain = userPort.findToken(user, tokenInfo.deviceType())
+                .orElse(new UserDeviceTokenDomain(
+                    null,
+                    user.getUserId(),
+                    tokenInfo.token(),
+                    tokenInfo.deviceType(),
+                    tokenInfo.lastLoggedInAt()
+                ));
+
+            if (!tokenInfo.token().equals(tokenDomain.getToken())) {
+                tokenDomain.update(tokenInfo.token(), tokenInfo.lastLoggedInAt());
+            }
+
+            userPort.saveToken(user, tokenDomain);
 
             logPort.recordSuccessLog(new LoginLogRecord(user, clientType));
         } catch (PasswordDoNotMatchException | UserNotFoundException e) {

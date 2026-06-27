@@ -40,3 +40,4 @@ out/
 docker-data/
 
 .env
+src/main/resources/*.json

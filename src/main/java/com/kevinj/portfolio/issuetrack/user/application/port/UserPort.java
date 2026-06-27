@@ -1,7 +1,9 @@
 package com.kevinj.portfolio.issuetrack.user.application.port;
 
 import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.user.domain.UserDeviceTokenDomain;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserPort {
@@ -11,4 +13,8 @@ public interface UserPort {
     Optional<User> loadByEmail(String loginId);
     Optional<User> loadByProvider(String email, String provider);
     void save(User user);
+    void saveToken(User user, UserDeviceTokenDomain tokenDomain);
+    Optional<UserDeviceTokenDomain> findToken(User user, String deviceType);
+    List<String> findAllUserTokens(User user);
+    void deleteToken(String token);
 }

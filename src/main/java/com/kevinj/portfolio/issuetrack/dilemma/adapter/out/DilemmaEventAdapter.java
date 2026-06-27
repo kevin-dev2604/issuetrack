@@ -1,119 +1,135 @@
 package com.kevinj.portfolio.issuetrack.dilemma.adapter.out;
 
-import com.kevinj.portfolio.issuetrack.dilemma.application.dto.event.DilemmaEvent;
+import com.google.firebase.messaging.*;
 import com.kevinj.portfolio.issuetrack.dilemma.application.dto.event.DilemmaEventType;
 import com.kevinj.portfolio.issuetrack.dilemma.application.port.DilemmaEventProducerPort;
-import com.kevinj.portfolio.issuetrack.global.time.SystemTimeProvider;
+import com.kevinj.portfolio.issuetrack.global.push.AsyncFcmExecutor;
+import com.kevinj.portfolio.issuetrack.user.adapter.out.jpa.JpaUserDeviceTokenRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.common.TopicPartition;
-import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.core.KafkaTemplate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DilemmaEventAdapter implements DilemmaEventProducerPort {
 
-    private final KafkaTemplate<String, DilemmaEvent> kafkaTemplate;
-    private final ConsumerFactory<String, Object> consumerFactory;
-    private final SystemTimeProvider timeProvider;
-
-    private final String TOPIC = "dilemma-events";
+    private final AsyncFcmExecutor asyncFcmExecutor;
+    private final JpaUserDeviceTokenRepository jpaUserDeviceTokenRepository;
 
     @Override
-    public void sendDilemmaOpen(Long dilemmaId, String dilemmaTitle, Long createdBy) {
-        DilemmaEvent event = new DilemmaEvent(
-            String.format("%s-%020d", TOPIC, getEndOffset()),
-            DilemmaEventType.DILEMMA_CREATED.getValue(),
-            "Dilemma Opened",
-            String.format("Dilemma '%s' opened.", dilemmaTitle),
-            dilemmaId,
-            null,
-            createdBy,
-            timeProvider.now()
-        );
+    public void sendDilemmaOpen(List<String> tokens, Long dilemmaId, String dilemmaTitle, Long createdBy) {
+        Map<String, String> data = new HashMap<>();
+        data.put("eventType", DilemmaEventType.DILEMMA_CREATED.getValue());
+        data.put("dilemmaId", String.valueOf(dilemmaId));
+        data.put("createdBy", String.valueOf(createdBy));
 
-        kafkaTemplate.send(
-            TOPIC,
-            event.eventId(),
-            event
-        );
+        for (String token : tokens) {
+            try {
+                asyncFcmExecutor.push(
+                    token,
+                    "Dilemma Opened",
+                    String.format("Dilemma '%s' opened.", dilemmaTitle),
+                    data
+                );
+            } catch (FirebaseMessagingException e) {
+                if (e.getMessagingErrorCode() == MessagingErrorCode.UNREGISTERED) {
+                    // 💡 중요: 구글이 "이 토큰 이제 없는 주소야!"라고 알려준 것입니다.
+                    // 우리 DB로 가서 해당 token이 있는 행(Row)을 즉시 삭제(Delete)해야 합니다.
+                    // 지우지 않으면 다음 발송 때도 유효하지 않은 요청을 보내게 되어 리소스가 낭비됩니다.
+                    jpaUserDeviceTokenRepository.deleteByToken(token);
+                }
+            }
+        }
+
     }
 
     @Override
-    public void sendDilemmaEdited(Long dilemmaId, String dilemmaTitle, Long createdBy) {
-        DilemmaEvent event = new DilemmaEvent(
-            String.format("%s-%020d", TOPIC, getEndOffset()),
-            DilemmaEventType.DILEMMA_EDITED.getValue(),
-            "Dilemma edited",
-            String.format("Dilemma '%s' edited.", dilemmaTitle),
-            dilemmaId,
-            null,
-            createdBy,
-            timeProvider.now()
-        );
+    public void sendDilemmaEdited(List<String> tokens, Long dilemmaId, String dilemmaTitle, Long createdBy) {
 
-        kafkaTemplate.send(
-            TOPIC,
-            event.eventId(),
-            event
-        );
+        Map<String, String> data = new HashMap<>();
+        data.put("eventType", DilemmaEventType.DILEMMA_EDITED.getValue());
+        data.put("dilemmaId", String.valueOf(dilemmaId));
+        data.put("createdBy", String.valueOf(createdBy));
+
+        for (String token : tokens) {
+            try {
+                asyncFcmExecutor.push(
+                    token,
+                    "Dilemma edited",
+                    String.format("Dilemma '%s' edited.", dilemmaTitle),
+                    data
+                );
+            } catch (FirebaseMessagingException e) {
+                if (e.getMessagingErrorCode() == MessagingErrorCode.UNREGISTERED) {
+                    // 💡 중요: 구글이 "이 토큰 이제 없는 주소야!"라고 알려준 것입니다.
+                    // 우리 DB로 가서 해당 token이 있는 행(Row)을 즉시 삭제(Delete)해야 합니다.
+                    // 지우지 않으면 다음 발송 때도 유효하지 않은 요청을 보내게 되어 리소스가 낭비됩니다.
+                    jpaUserDeviceTokenRepository.deleteByToken(token);
+                }
+            }
+        }
+
     }
 
     @Override
-    public void sendDilemmaClosed(Long dilemmaId, String dilemmaTitle, Long createdBy) {
-        DilemmaEvent event = new DilemmaEvent(
-            String.format("%s-%020d", TOPIC, getEndOffset()),
-            DilemmaEventType.DILEMMA_CLOSED.getValue(),
-            "Dilemma closed",
-            String.format("Dilemma '%s' closed.", dilemmaTitle),
-            dilemmaId,
-            null,
-            createdBy,
-            timeProvider.now()
-        );
+    public void sendDilemmaClosed(List<String> tokens, Long dilemmaId, String dilemmaTitle, Long createdBy) {
 
-        kafkaTemplate.send(
-            TOPIC,
-            event.eventId(),
-            event
-        );
+        Map<String, String> data = new HashMap<>();
+        data.put("eventType", DilemmaEventType.DILEMMA_CLOSED.getValue());
+        data.put("dilemmaId", String.valueOf(dilemmaId));
+        data.put("createdBy", String.valueOf(createdBy));
+
+        for (String token : tokens) {
+            try {
+                asyncFcmExecutor.push(
+                    token,
+                    "Dilemma closed",
+                    String.format("Dilemma '%s' closed.", dilemmaTitle),
+                    data
+                );
+            } catch (FirebaseMessagingException e) {
+                if (e.getMessagingErrorCode() == MessagingErrorCode.UNREGISTERED) {
+                    // 💡 중요: 구글이 "이 토큰 이제 없는 주소야!"라고 알려준 것입니다.
+                    // 우리 DB로 가서 해당 token이 있는 행(Row)을 즉시 삭제(Delete)해야 합니다.
+                    // 지우지 않으면 다음 발송 때도 유효하지 않은 요청을 보내게 되어 리소스가 낭비됩니다.
+                    jpaUserDeviceTokenRepository.deleteByToken(token);
+                }
+            }
+        }
+
     }
 
     @Override
-    public void sendDiscussionCreated(Long dilemmaId, Long dilemmaDiscussionId, String dilemmaTitle, Long createdBy) {
-        DilemmaEvent event = new DilemmaEvent(
-            String.format("%s-%020d", TOPIC, getEndOffset()),
-            DilemmaEventType.DISCUSSION_CREATED.getValue(),
-            "Discussion created",
-            String.format("Discussion of Dilemma '%s' created", dilemmaTitle),
-            dilemmaId,
-            dilemmaDiscussionId,
-            createdBy,
-            timeProvider.now()
-        );
+    public void sendDiscussionCreated(List<String> tokens, Long dilemmaId, Long dilemmaDiscussionId, String dilemmaTitle, Long createdBy) {
 
-        kafkaTemplate.send(
-            TOPIC,
-            event.eventId(),
-            event
-        );
-    }
+        Map<String, String> data = new HashMap<>();
+        data.put("eventType", DilemmaEventType.DISCUSSION_CREATED.getValue());
+        data.put("dilemmaId", String.valueOf(dilemmaId));
+        data.put("dilemmaDiscussionId", String.valueOf(dilemmaDiscussionId));
+        data.put("createdBy", String.valueOf(createdBy));
 
-    private Long getEndOffset() {
-        try(Consumer<String, Object> consumer = consumerFactory.createConsumer()) {
-            List<TopicPartition> partitions = consumer.partitionsFor(TOPIC)
-                .stream()
-                .map(info -> new TopicPartition(info.topic(), info.partition()))
-                .toList();
-
-            return consumer.endOffsets(partitions).values()
-                .stream()
-                .mapToLong(Long::longValue)
-                .sum();
+        for (String token : tokens) {
+            try {
+                asyncFcmExecutor.push(
+                    token,
+                    "Discussion created",
+                    String.format("Discussion of Dilemma '%s' created.", dilemmaTitle),
+                    data
+                );
+            } catch (FirebaseMessagingException e) {
+                if (e.getMessagingErrorCode() == MessagingErrorCode.UNREGISTERED) {
+                    // 💡 중요: 구글이 "이 토큰 이제 없는 주소야!"라고 알려준 것입니다.
+                    // 우리 DB로 가서 해당 token이 있는 행(Row)을 즉시 삭제(Delete)해야 합니다.
+                    // 지우지 않으면 다음 발송 때도 유효하지 않은 요청을 보내게 되어 리소스가 낭비됩니다.
+                    jpaUserDeviceTokenRepository.deleteByToken(token);
+                }
+            }
         }
     }
+
 }

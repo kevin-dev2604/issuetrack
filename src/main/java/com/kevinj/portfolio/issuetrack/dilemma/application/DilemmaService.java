@@ -40,7 +40,8 @@ public class DilemmaService implements DilemmaUseCase {
 
     @Override
     public void openDilemma(Long userId, DilemmaCreateCommand createCommand) {
-        IssueDomain issue = issuePort.getIssue(getUser(userId), createCommand.issueId())
+        User user = getUser(userId);
+        IssueDomain issue = issuePort.getIssue(user, createCommand.issueId())
                 .orElseThrow(IssueNotFoundException::new);
 
         if (List.of(IssueStatus.DILEMMA, IssueStatus.EXIT).contains(issue.getStatus())) {
@@ -52,12 +53,14 @@ public class DilemmaService implements DilemmaUseCase {
         issue.convertToDilemma();
         issuePort.saveIssue(issue);
 
-        eventProducerPort.sendDilemmaOpen(dilemmaId, createCommand.title(), userId);
+        List<String> tokens = userPort.findAllUserTokens(user);
+        eventProducerPort.sendDilemmaOpen(tokens, dilemmaId, createCommand.title(), userId);
     }
 
     @Override
     public void editDilemma(Long userId, DilemmaEditCommand editCommand) {
-        DilemmaDomain dilemma = dilemmaPort.getDilemma(getUser(userId), editCommand.dilemmaId())
+        User user = getUser(userId);
+        DilemmaDomain dilemma = dilemmaPort.getDilemma(user, editCommand.dilemmaId())
                 .orElseThrow(DilemmaNotFoundException::new);
 
         if (dilemma.getIsOpen().equals(YN.N)) {
@@ -68,7 +71,8 @@ public class DilemmaService implements DilemmaUseCase {
 
         dilemmaPort.saveDilemma(dilemma);
 
-        eventProducerPort.sendDilemmaEdited(dilemma.getDilemmaId(), editCommand.title(), userId);
+        List<String> tokens = userPort.findAllUserTokens(user);
+        eventProducerPort.sendDilemmaEdited(tokens, dilemma.getDilemmaId(), editCommand.title(), userId);
     }
 
     @Override
@@ -84,7 +88,8 @@ public class DilemmaService implements DilemmaUseCase {
 
         Long discussionId = dilemmaDiscussionPort.createDilemmaDiscussion(user, dilemma, createCommand.content());
 
-        eventProducerPort.sendDiscussionCreated(dilemma.getDilemmaId(), discussionId, dilemma.getTitle(), userId);
+        List<String> tokens = userPort.findAllUserTokens(user);
+        eventProducerPort.sendDiscussionCreated(tokens, dilemma.getDilemmaId(), discussionId, dilemma.getTitle(), userId);
     }
 
     @Override
@@ -119,7 +124,9 @@ public class DilemmaService implements DilemmaUseCase {
         issue.changeStatus(IssueStatus.PENDING);
         issuePort.saveIssue(issue);
 
-        eventProducerPort.sendDilemmaClosed(dilemma.getDilemmaId(), dilemma.getTitle(), null);
+        User user = getUser(issue.getUserId());
+        List<String> tokens = userPort.findAllUserTokens(user);
+        eventProducerPort.sendDilemmaClosed(tokens, dilemma.getDilemmaId(), dilemma.getTitle(), null);
     }
 
     @Override

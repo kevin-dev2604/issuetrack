@@ -49,8 +49,8 @@ dependencies {
 	// Redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-	// kafka
-	implementation 'org.springframework.kafka:spring-kafka'
+	// Firebase Admin SDK
+	implementation 'com.google.firebase:firebase-admin:9.2.0' // 2026년 기준 최신 안정 버전 사용 권장
 
 	// datasource-proxy for logging
 	implementation "net.ttddyy:datasource-proxy:1.11.0"

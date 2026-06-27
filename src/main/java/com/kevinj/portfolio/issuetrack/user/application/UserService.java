@@ -2,14 +2,13 @@ package com.kevinj.portfolio.issuetrack.user.application;
 
 import com.kevinj.portfolio.issuetrack.auth.application.port.PasswordEncodePort;
 import com.kevinj.portfolio.issuetrack.global.enums.YN;
-import com.kevinj.portfolio.issuetrack.user.application.dto.UserCreateCommand;
-import com.kevinj.portfolio.issuetrack.user.application.dto.UserInfoResponse;
-import com.kevinj.portfolio.issuetrack.user.application.dto.UserPasswordCommand;
-import com.kevinj.portfolio.issuetrack.user.application.dto.UserUpdateCommand;
+import com.kevinj.portfolio.issuetrack.user.application.dto.*;
 import com.kevinj.portfolio.issuetrack.user.application.port.UserPort;
 import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.user.domain.UserDeviceTokenDomain;
 import com.kevinj.portfolio.issuetrack.user.exception.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -142,5 +141,32 @@ public class UserService implements UserUseCase {
             userDomain.addLoginFailCnt();
             userPort.save(userDomain);
         });
+    }
+
+    @Override
+    public void registerToken(Long userId, UserTokenCommand tokenCommand) {
+        if (tokenCommand == null ||
+            StringUtils.isBlank(tokenCommand.token()) ||
+            StringUtils.isBlank(tokenCommand.deviceType())) {
+            throw new FcmTokenInvalidException();
+        }
+
+        User user = userPort.loadById(userId)
+            .orElseThrow(NotFoundUserException::new);
+
+        UserDeviceTokenDomain tokenDomain = userPort.findToken(user, tokenCommand.deviceType())
+            .orElse(new UserDeviceTokenDomain(
+                null,
+                user.getUserId(),
+                tokenCommand.token(),
+                tokenCommand.deviceType(),
+                tokenCommand.lastLoggedInAt()
+            ));
+
+        if (!tokenCommand.token().equals(tokenDomain.getToken())) {
+            tokenDomain.update(tokenCommand.token(), tokenCommand.lastLoggedInAt());
+        }
+
+        userPort.saveToken(user, tokenDomain);
     }
 }
