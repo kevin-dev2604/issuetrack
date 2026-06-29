@@ -11,9 +11,9 @@ import com.example.jooq.tables.DilemmaDiscussion;
 import com.example.jooq.tables.Issue;
 import com.example.jooq.tables.IssueAttributes;
 import com.example.jooq.tables.LoginLog;
-import com.example.jooq.tables.Notification;
 import com.example.jooq.tables.Process;
 import com.example.jooq.tables.Step;
+import com.example.jooq.tables.UserDeviceToken;
 import com.example.jooq.tables.Users;
 import com.example.jooq.tables.records.AttributesRecord;
 import com.example.jooq.tables.records.CategoryRecord;
@@ -22,9 +22,9 @@ import com.example.jooq.tables.records.DilemmaRecord;
 import com.example.jooq.tables.records.IssueAttributesRecord;
 import com.example.jooq.tables.records.IssueRecord;
 import com.example.jooq.tables.records.LoginLogRecord;
-import com.example.jooq.tables.records.NotificationRecord;
 import com.example.jooq.tables.records.ProcessRecord;
 import com.example.jooq.tables.records.StepRecord;
+import com.example.jooq.tables.records.UserDeviceTokenRecord;
 import com.example.jooq.tables.records.UsersRecord;
 
 import org.jooq.ForeignKey;
@@ -52,9 +52,10 @@ public class Keys {
     public static final UniqueKey<IssueRecord> ISSUE_PKEY = Internal.createUniqueKey(Issue.ISSUE, DSL.name("issue_pkey"), new TableField[] { Issue.ISSUE.ISSUE_ID }, true);
     public static final UniqueKey<IssueAttributesRecord> ISSUE_ATTRIBUTES_PKEY = Internal.createUniqueKey(IssueAttributes.ISSUE_ATTRIBUTES, DSL.name("issue_attributes_pkey"), new TableField[] { IssueAttributes.ISSUE_ATTRIBUTES.ID }, true);
     public static final UniqueKey<LoginLogRecord> LOGIN_LOG_PKEY = Internal.createUniqueKey(LoginLog.LOGIN_LOG, DSL.name("login_log_pkey"), new TableField[] { LoginLog.LOGIN_LOG.TRACE_ID }, true);
-    public static final UniqueKey<NotificationRecord> NOTIFICATION_PKEY = Internal.createUniqueKey(Notification.NOTIFICATION, DSL.name("notification_pkey"), new TableField[] { Notification.NOTIFICATION.NOTIFICATION_ID }, true);
     public static final UniqueKey<ProcessRecord> PROCESS_PKEY = Internal.createUniqueKey(Process.PROCESS, DSL.name("process_pkey"), new TableField[] { Process.PROCESS.PROCESS_ID }, true);
     public static final UniqueKey<StepRecord> STEP_PKEY = Internal.createUniqueKey(Step.STEP, DSL.name("step_pkey"), new TableField[] { Step.STEP.STEP_ID }, true);
+    public static final UniqueKey<UserDeviceTokenRecord> USER_DEVICE_TOKEN_PKEY = Internal.createUniqueKey(UserDeviceToken.USER_DEVICE_TOKEN, DSL.name("user_device_token_pkey"), new TableField[] { UserDeviceToken.USER_DEVICE_TOKEN.ID }, true);
+    public static final UniqueKey<UserDeviceTokenRecord> USER_DEVICE_TOKEN_TOKEN_KEY = Internal.createUniqueKey(UserDeviceToken.USER_DEVICE_TOKEN, DSL.name("user_device_token_token_key"), new TableField[] { UserDeviceToken.USER_DEVICE_TOKEN.TOKEN }, true);
     public static final UniqueKey<UsersRecord> USERS_PKEY = Internal.createUniqueKey(Users.USERS, DSL.name("users_pkey"), new TableField[] { Users.USERS.USER_ID }, true);
 
     // -------------------------------------------------------------------------
@@ -72,7 +73,7 @@ public class Keys {
     public static final ForeignKey<IssueAttributesRecord, AttributesRecord> ISSUE_ATTRIBUTES__ISSUE_ATTRIBUTES_ATTRIBUTES_FK = Internal.createForeignKey(IssueAttributes.ISSUE_ATTRIBUTES, DSL.name("issue_attributes_attributes_fk"), new TableField[] { IssueAttributes.ISSUE_ATTRIBUTES.ATTRIBUTES_ID }, Keys.ATTRIBUTES_PKEY, new TableField[] { Attributes.ATTRIBUTES.ATTRIBUTES_ID }, true);
     public static final ForeignKey<IssueAttributesRecord, IssueRecord> ISSUE_ATTRIBUTES__ISSUE_ATTRIBUTES_ISSUE_FK = Internal.createForeignKey(IssueAttributes.ISSUE_ATTRIBUTES, DSL.name("issue_attributes_issue_fk"), new TableField[] { IssueAttributes.ISSUE_ATTRIBUTES.ISSUE_ID }, Keys.ISSUE_PKEY, new TableField[] { Issue.ISSUE.ISSUE_ID }, true);
     public static final ForeignKey<LoginLogRecord, UsersRecord> LOGIN_LOG__LOGIN_LOG_USERS_FK = Internal.createForeignKey(LoginLog.LOGIN_LOG, DSL.name("login_log_users_fk"), new TableField[] { LoginLog.LOGIN_LOG.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.USER_ID }, true);
-    public static final ForeignKey<NotificationRecord, UsersRecord> NOTIFICATION__FK_USER_TO_NOTIFICATION = Internal.createForeignKey(Notification.NOTIFICATION, DSL.name("fk_user_to_notification"), new TableField[] { Notification.NOTIFICATION.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.USER_ID }, true);
     public static final ForeignKey<ProcessRecord, UsersRecord> PROCESS__PROCESS_USERS_FK = Internal.createForeignKey(Process.PROCESS, DSL.name("process_users_fk"), new TableField[] { Process.PROCESS.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.USER_ID }, true);
     public static final ForeignKey<StepRecord, ProcessRecord> STEP__STEP_PROCESS_FK = Internal.createForeignKey(Step.STEP, DSL.name("step_process_fk"), new TableField[] { Step.STEP.PROCESS_ID }, Keys.PROCESS_PKEY, new TableField[] { Process.PROCESS.PROCESS_ID }, true);
+    public static final ForeignKey<UserDeviceTokenRecord, UsersRecord> USER_DEVICE_TOKEN__FK_USERS_TO_USER_DEVICE_TOKEN = Internal.createForeignKey(UserDeviceToken.USER_DEVICE_TOKEN, DSL.name("fk_users_to_user_device_token"), new TableField[] { UserDeviceToken.USER_DEVICE_TOKEN.USER_ID }, Keys.USERS_PKEY, new TableField[] { Users.USERS.USER_ID }, true);
 }

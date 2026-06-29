@@ -1,12 +1,12 @@
 package com.kevinj.portfolio.issuetrack.admin;
 
 import com.kevinj.portfolio.issuetrack.admin.adapter.out.CategoryMapper;
-import com.kevinj.portfolio.issuetrack.admin.application.CategoryManageService;
-import com.kevinj.portfolio.issuetrack.admin.application.CategoryManageUseCase;
-import com.kevinj.portfolio.issuetrack.admin.application.dto.CategoryCreateCommand;
-import com.kevinj.portfolio.issuetrack.admin.application.dto.CategoryManageInfoResponse;
-import com.kevinj.portfolio.issuetrack.admin.application.dto.CategorySearchCommand;
-import com.kevinj.portfolio.issuetrack.admin.application.dto.CategoryUpdateCommand;
+import com.kevinj.portfolio.issuetrack.admin.application.service.CategoryManageService;
+import com.kevinj.portfolio.issuetrack.admin.application.port.in.CategoryManageUseCase;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.CategoryCreateCommand;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.CategoryManageInfoResponse;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.CategorySearchCommand;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.CategoryUpdateCommand;
 import com.kevinj.portfolio.issuetrack.admin.exception.DuplicateCategoryException;
 import com.kevinj.portfolio.issuetrack.admin.exception.NotFoundCategoryException;
 import com.kevinj.portfolio.issuetrack.admin.exception.WrongParametersInputException;

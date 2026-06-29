@@ -1,11 +1,11 @@
 package com.kevinj.portfolio.issuetrack.user;
 
 import com.kevinj.portfolio.issuetrack.FakePasswordEncoder;
-import com.kevinj.portfolio.issuetrack.auth.application.port.PasswordEncodePort;
+import com.kevinj.portfolio.issuetrack.auth.application.port.out.PasswordEncodePort;
 import com.kevinj.portfolio.issuetrack.global.enums.YN;
-import com.kevinj.portfolio.issuetrack.user.application.UserService;
-import com.kevinj.portfolio.issuetrack.user.application.dto.UserCreateCommand;
-import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.user.application.service.UserService;
+import com.kevinj.portfolio.issuetrack.user.adapter.in.web.dto.UserCreateCommand;
+import com.kevinj.portfolio.issuetrack.user.domain.model.User;
 import com.kevinj.portfolio.issuetrack.user.exception.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -2342,20 +2342,20 @@
       "Q3hCN8Awy9xSvnr9UdmOz": {
         "id": "Q3hCN8Awy9xSvnr9UdmOz",
         "tableId": "ocB7T7dX4zHXsYHnp6zwh",
-        "name": "device type",
+        "name": "device_type",
         "comment": "login device type",
         "dataType": "varchar",
         "default": "",
         "options": 8,
         "ui": {
           "keys": 0,
-          "widthName": 62,
+          "widthName": 64,
           "widthComment": 92,
           "widthDataType": 60,
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1782572369668,
+          "updateAt": 1782709043077,
           "createAt": 1781621461855
         }
       },

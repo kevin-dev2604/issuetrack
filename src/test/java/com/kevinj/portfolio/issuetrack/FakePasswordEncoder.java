@@ -1,6 +1,6 @@
 package com.kevinj.portfolio.issuetrack;
 
-import com.kevinj.portfolio.issuetrack.auth.application.port.PasswordEncodePort;
+import com.kevinj.portfolio.issuetrack.auth.application.port.out.PasswordEncodePort;
 
 public class FakePasswordEncoder implements PasswordEncodePort {
 

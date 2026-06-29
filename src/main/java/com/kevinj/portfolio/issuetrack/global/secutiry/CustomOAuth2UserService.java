@@ -1,11 +1,10 @@
 package com.kevinj.portfolio.issuetrack.global.secutiry;
 
-import com.kevinj.portfolio.issuetrack.auth.application.dto.LoginResponse;
-import com.kevinj.portfolio.issuetrack.auth.application.dto.OAuth2LoginCommand;
-import com.kevinj.portfolio.issuetrack.auth.application.usecase.OAuth2LoginUseCase;
+import com.kevinj.portfolio.issuetrack.auth.adapter.in.web.dto.LoginResponse;
+import com.kevinj.portfolio.issuetrack.auth.adapter.in.web.dto.OAuth2LoginCommand;
+import com.kevinj.portfolio.issuetrack.auth.application.port.in.OAuth2LoginUseCase;
 import com.kevinj.portfolio.issuetrack.global.dto.oauth.CustomOAuth2User;
 import com.kevinj.portfolio.issuetrack.global.dto.oauth.OAuthAttributes;
-import com.kevinj.portfolio.issuetrack.user.application.UserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

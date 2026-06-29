@@ -1,11 +1,11 @@
 package com.kevinj.portfolio.issuetrack.admin;
 
 import com.kevinj.portfolio.issuetrack.admin.adapter.out.AttributesMapper;
-import com.kevinj.portfolio.issuetrack.admin.application.AttributesManageService;
-import com.kevinj.portfolio.issuetrack.admin.application.dto.AttributesCreateCommand;
-import com.kevinj.portfolio.issuetrack.admin.application.dto.AttributesManageInfoResponse;
-import com.kevinj.portfolio.issuetrack.admin.application.dto.AttributesSearchCommand;
-import com.kevinj.portfolio.issuetrack.admin.application.dto.AttributesUpdateCommand;
+import com.kevinj.portfolio.issuetrack.admin.application.service.AttributesManageService;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.AttributesCreateCommand;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.AttributesManageInfoResponse;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.AttributesSearchCommand;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.AttributesUpdateCommand;
 import com.kevinj.portfolio.issuetrack.admin.exception.DuplicateAttributesException;
 import com.kevinj.portfolio.issuetrack.admin.exception.NotFoundAttributesException;
 import com.kevinj.portfolio.issuetrack.admin.exception.WrongParametersInputException;

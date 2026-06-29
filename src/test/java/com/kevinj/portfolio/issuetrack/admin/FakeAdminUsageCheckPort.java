@@ -1,6 +1,6 @@
 package com.kevinj.portfolio.issuetrack.admin;
 
-import com.kevinj.portfolio.issuetrack.admin.application.port.AdminUsageCheckPort;
+import com.kevinj.portfolio.issuetrack.admin.application.port.out.AdminUsageCheckPort;
 import com.kevinj.portfolio.issuetrack.issue.FakeIssuePort;
 
 public class FakeAdminUsageCheckPort implements AdminUsageCheckPort {

@@ -1,7 +1,7 @@
 package com.kevinj.portfolio.issuetrack.auth;
 
-import com.kevinj.portfolio.issuetrack.auth.application.dto.LoginLogRecord;
-import com.kevinj.portfolio.issuetrack.auth.application.port.LoginLogPort;
+import com.kevinj.portfolio.issuetrack.auth.adapter.in.web.dto.LoginLogRecord;
+import com.kevinj.portfolio.issuetrack.auth.application.port.out.LoginLogPort;
 import com.kevinj.portfolio.issuetrack.global.enums.YN;
 import com.kevinj.portfolio.issuetrack.global.time.SystemTimeProvider;
 

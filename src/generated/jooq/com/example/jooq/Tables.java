@@ -11,9 +11,9 @@ import com.example.jooq.tables.DilemmaDiscussion;
 import com.example.jooq.tables.Issue;
 import com.example.jooq.tables.IssueAttributes;
 import com.example.jooq.tables.LoginLog;
-import com.example.jooq.tables.Notification;
 import com.example.jooq.tables.Process;
 import com.example.jooq.tables.Step;
+import com.example.jooq.tables.UserDeviceToken;
 import com.example.jooq.tables.Users;
 
 
@@ -59,11 +59,6 @@ public class Tables {
     public static final LoginLog LOGIN_LOG = LoginLog.LOGIN_LOG;
 
     /**
-     * User notifications
-     */
-    public static final Notification NOTIFICATION = Notification.NOTIFICATION;
-
-    /**
      * The table <code>issuetrack.process</code>.
      */
     public static final Process PROCESS = Process.PROCESS;
@@ -72,6 +67,11 @@ public class Tables {
      * The table <code>issuetrack.step</code>.
      */
     public static final Step STEP = Step.STEP;
+
+    /**
+     * User FCM device token information
+     */
+    public static final UserDeviceToken USER_DEVICE_TOKEN = UserDeviceToken.USER_DEVICE_TOKEN;
 
     /**
      * The table <code>issuetrack.users</code>.

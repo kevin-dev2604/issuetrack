@@ -4,12 +4,12 @@ import com.kevinj.portfolio.issuetrack.FakePort;
 import com.kevinj.portfolio.issuetrack.exception.TestConditionFailedException;
 import com.kevinj.portfolio.issuetrack.global.enums.YN;
 import com.kevinj.portfolio.issuetrack.process.adapter.out.ProcessAndStepMapper;
-import com.kevinj.portfolio.issuetrack.process.application.dto.process.ProcessCreateCommand;
-import com.kevinj.portfolio.issuetrack.process.application.dto.process.ProcessInfoResponse;
-import com.kevinj.portfolio.issuetrack.process.application.dto.process.ProcessSearchQuery;
-import com.kevinj.portfolio.issuetrack.process.application.port.ProcessPort;
-import com.kevinj.portfolio.issuetrack.process.domain.ProcessDomain;
-import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.process.adapter.in.web.dto.process.ProcessCreateCommand;
+import com.kevinj.portfolio.issuetrack.process.adapter.in.web.dto.process.ProcessInfoResponse;
+import com.kevinj.portfolio.issuetrack.process.adapter.in.web.dto.process.ProcessSearchQuery;
+import com.kevinj.portfolio.issuetrack.process.application.port.out.ProcessPort;
+import com.kevinj.portfolio.issuetrack.process.domain.model.ProcessDomain;
+import com.kevinj.portfolio.issuetrack.user.domain.model.User;
 import org.assertj.core.util.Lists;
 import org.springframework.data.domain.*;
 

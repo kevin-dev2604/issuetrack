@@ -1,12 +1,12 @@
 package com.kevinj.portfolio.issuetrack.dilemma;
 
 import com.kevinj.portfolio.issuetrack.FakePort;
-import com.kevinj.portfolio.issuetrack.dilemma.application.dto.DilemmaDiscussionInfo;
-import com.kevinj.portfolio.issuetrack.dilemma.application.port.DilemmaDiscussionPort;
-import com.kevinj.portfolio.issuetrack.dilemma.domain.DilemmaDiscussionDomain;
-import com.kevinj.portfolio.issuetrack.dilemma.domain.DilemmaDomain;
+import com.kevinj.portfolio.issuetrack.dilemma.adapter.in.web.dto.DilemmaDiscussionInfo;
+import com.kevinj.portfolio.issuetrack.dilemma.application.port.out.DilemmaDiscussionPort;
+import com.kevinj.portfolio.issuetrack.dilemma.domain.model.DilemmaDiscussionDomain;
+import com.kevinj.portfolio.issuetrack.dilemma.domain.model.DilemmaDomain;
 import com.kevinj.portfolio.issuetrack.global.time.SystemTimeProvider;
-import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.user.domain.model.User;
 
 import java.util.HashMap;
 import java.util.List;

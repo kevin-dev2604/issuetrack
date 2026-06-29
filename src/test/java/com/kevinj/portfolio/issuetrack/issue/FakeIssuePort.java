@@ -2,15 +2,15 @@ package com.kevinj.portfolio.issuetrack.issue;
 
 import com.kevinj.portfolio.issuetrack.FakePort;
 import com.kevinj.portfolio.issuetrack.issue.adapter.out.IssueMapper;
-import com.kevinj.portfolio.issuetrack.issue.application.dto.IssueAttributesBasicInfo;
-import com.kevinj.portfolio.issuetrack.issue.application.dto.IssueDetailResponse;
-import com.kevinj.portfolio.issuetrack.issue.application.dto.IssueSearchQuery;
-import com.kevinj.portfolio.issuetrack.issue.application.dto.IssueSearchResponse;
-import com.kevinj.portfolio.issuetrack.issue.application.port.IssuePort;
-import com.kevinj.portfolio.issuetrack.issue.domain.IssueAttributesDomain;
-import com.kevinj.portfolio.issuetrack.issue.domain.IssueDomain;
-import com.kevinj.portfolio.issuetrack.issue.domain.IssueStatus;
-import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.issue.adapter.in.web.dto.IssueAttributesBasicInfo;
+import com.kevinj.portfolio.issuetrack.issue.adapter.in.web.dto.IssueDetailResponse;
+import com.kevinj.portfolio.issuetrack.issue.adapter.in.web.dto.IssueSearchQuery;
+import com.kevinj.portfolio.issuetrack.issue.adapter.in.web.dto.IssueSearchResponse;
+import com.kevinj.portfolio.issuetrack.issue.application.port.out.IssuePort;
+import com.kevinj.portfolio.issuetrack.issue.domain.model.IssueAttributesDomain;
+import com.kevinj.portfolio.issuetrack.issue.domain.model.IssueDomain;
+import com.kevinj.portfolio.issuetrack.issue.domain.model.enums.IssueStatus;
+import com.kevinj.portfolio.issuetrack.user.domain.model.User;
 import org.springframework.data.domain.*;
 
 import java.util.HashMap;

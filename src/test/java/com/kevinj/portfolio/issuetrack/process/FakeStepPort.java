@@ -4,11 +4,11 @@ import com.kevinj.portfolio.issuetrack.FakePort;
 import com.kevinj.portfolio.issuetrack.exception.TestConditionFailedException;
 import com.kevinj.portfolio.issuetrack.global.enums.YN;
 import com.kevinj.portfolio.issuetrack.process.adapter.out.ProcessAndStepMapper;
-import com.kevinj.portfolio.issuetrack.process.application.dto.step.StepCreateInfo;
-import com.kevinj.portfolio.issuetrack.process.application.port.StepPort;
-import com.kevinj.portfolio.issuetrack.process.domain.ProcessDomain;
-import com.kevinj.portfolio.issuetrack.process.domain.StepDomain;
-import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.process.adapter.in.web.dto.step.StepCreateInfo;
+import com.kevinj.portfolio.issuetrack.process.application.port.out.StepPort;
+import com.kevinj.portfolio.issuetrack.process.domain.model.ProcessDomain;
+import com.kevinj.portfolio.issuetrack.process.domain.model.StepDomain;
+import com.kevinj.portfolio.issuetrack.user.domain.model.User;
 import org.assertj.core.util.Lists;
 
 import java.util.*;

@@ -2,13 +2,13 @@ package com.kevinj.portfolio.issuetrack.auth;
 
 import com.kevinj.portfolio.issuetrack.auth.adapter.out.redis.RefreshTokenStore;
 import com.kevinj.portfolio.issuetrack.auth.adapter.out.redis.StoredRefresh;
-import com.kevinj.portfolio.issuetrack.auth.application.dto.LoginResponse;
-import com.kevinj.portfolio.issuetrack.auth.application.dto.RefreshResponse;
-import com.kevinj.portfolio.issuetrack.auth.application.port.AuthPort;
-import com.kevinj.portfolio.issuetrack.auth.application.port.PasswordEncodePort;
+import com.kevinj.portfolio.issuetrack.auth.adapter.in.web.dto.LoginResponse;
+import com.kevinj.portfolio.issuetrack.auth.adapter.in.web.dto.RefreshResponse;
+import com.kevinj.portfolio.issuetrack.auth.application.port.out.AuthPort;
+import com.kevinj.portfolio.issuetrack.auth.application.port.out.PasswordEncodePort;
 import com.kevinj.portfolio.issuetrack.global.secutiry.TokenHash;
 import com.kevinj.portfolio.issuetrack.global.secutiry.TokenProvider;
-import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.user.domain.model.User;
 
 import java.time.Duration;
 import java.util.Optional;

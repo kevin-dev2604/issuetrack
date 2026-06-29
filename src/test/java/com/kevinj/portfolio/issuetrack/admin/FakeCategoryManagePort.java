@@ -1,10 +1,13 @@
 package com.kevinj.portfolio.issuetrack.admin;
 
 import com.kevinj.portfolio.issuetrack.FakePort;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.CategoryCreateCommand;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.CategoryManageInfoResponse;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.CategorySearchQuery;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.CategoryUpdateCommand;
 import com.kevinj.portfolio.issuetrack.admin.adapter.out.CategoryMapper;
-import com.kevinj.portfolio.issuetrack.admin.application.dto.*;
-import com.kevinj.portfolio.issuetrack.admin.application.port.CategoryManagePort;
-import com.kevinj.portfolio.issuetrack.admin.domain.CategoryManageInfo;
+import com.kevinj.portfolio.issuetrack.admin.application.port.out.CategoryManagePort;
+import com.kevinj.portfolio.issuetrack.admin.domain.model.CategoryManageInfo;
 import com.kevinj.portfolio.issuetrack.global.time.SystemTimeProvider;
 import com.kevinj.portfolio.issuetrack.global.time.TimeProvider;
 import org.springframework.data.domain.*;

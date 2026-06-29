@@ -11,9 +11,9 @@ import com.example.jooq.tables.DilemmaDiscussion;
 import com.example.jooq.tables.Issue;
 import com.example.jooq.tables.IssueAttributes;
 import com.example.jooq.tables.LoginLog;
-import com.example.jooq.tables.Notification;
 import com.example.jooq.tables.Process;
 import com.example.jooq.tables.Step;
+import com.example.jooq.tables.UserDeviceToken;
 import com.example.jooq.tables.Users;
 
 import java.util.Arrays;
@@ -73,11 +73,6 @@ public class Issuetrack extends SchemaImpl {
     public final LoginLog LOGIN_LOG = LoginLog.LOGIN_LOG;
 
     /**
-     * User notifications
-     */
-    public final Notification NOTIFICATION = Notification.NOTIFICATION;
-
-    /**
      * The table <code>issuetrack.process</code>.
      */
     public final Process PROCESS = Process.PROCESS;
@@ -86,6 +81,11 @@ public class Issuetrack extends SchemaImpl {
      * The table <code>issuetrack.step</code>.
      */
     public final Step STEP = Step.STEP;
+
+    /**
+     * User FCM device token information
+     */
+    public final UserDeviceToken USER_DEVICE_TOKEN = UserDeviceToken.USER_DEVICE_TOKEN;
 
     /**
      * The table <code>issuetrack.users</code>.
@@ -115,9 +115,9 @@ public class Issuetrack extends SchemaImpl {
             Issue.ISSUE,
             IssueAttributes.ISSUE_ATTRIBUTES,
             LoginLog.LOGIN_LOG,
-            Notification.NOTIFICATION,
             Process.PROCESS,
             Step.STEP,
+            UserDeviceToken.USER_DEVICE_TOKEN,
             Users.USERS
         );
     }

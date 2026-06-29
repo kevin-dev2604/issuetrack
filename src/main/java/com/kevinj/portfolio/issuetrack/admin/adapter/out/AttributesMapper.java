@@ -1,8 +1,8 @@
 package com.kevinj.portfolio.issuetrack.admin.adapter.out;
 
-import com.kevinj.portfolio.issuetrack.admin.adapter.out.jpa.Attributes;
-import com.kevinj.portfolio.issuetrack.admin.application.dto.AttributesManageInfoResponse;
-import com.kevinj.portfolio.issuetrack.admin.domain.AttributesManageInfo;
+import com.kevinj.portfolio.issuetrack.admin.adapter.out.persistence.Attributes;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.AttributesManageInfoResponse;
+import com.kevinj.portfolio.issuetrack.admin.domain.model.AttributesManageInfo;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 

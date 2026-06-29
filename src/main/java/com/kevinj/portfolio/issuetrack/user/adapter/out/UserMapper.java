@@ -1,9 +1,9 @@
 package com.kevinj.portfolio.issuetrack.user.adapter.out;
 
-import com.kevinj.portfolio.issuetrack.user.adapter.out.jpa.UserDeviceToken;
-import com.kevinj.portfolio.issuetrack.user.adapter.out.jpa.Users;
-import com.kevinj.portfolio.issuetrack.user.domain.User;
-import com.kevinj.portfolio.issuetrack.user.domain.UserDeviceTokenDomain;
+import com.kevinj.portfolio.issuetrack.user.adapter.out.persistence.UserDeviceToken;
+import com.kevinj.portfolio.issuetrack.user.adapter.out.persistence.Users;
+import com.kevinj.portfolio.issuetrack.user.domain.model.User;
+import com.kevinj.portfolio.issuetrack.user.domain.model.UserDeviceTokenDomain;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 

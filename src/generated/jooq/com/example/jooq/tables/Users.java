@@ -9,8 +9,8 @@ import com.example.jooq.Keys;
 import com.example.jooq.tables.DilemmaDiscussion.DilemmaDiscussionPath;
 import com.example.jooq.tables.Issue.IssuePath;
 import com.example.jooq.tables.LoginLog.LoginLogPath;
-import com.example.jooq.tables.Notification.NotificationPath;
 import com.example.jooq.tables.Process.ProcessPath;
+import com.example.jooq.tables.UserDeviceToken.UserDeviceTokenPath;
 import com.example.jooq.tables.records.UsersRecord;
 
 import java.time.OffsetDateTime;
@@ -210,17 +210,17 @@ public class Users extends TableImpl<UsersRecord> {
         return _dilemmaDiscussion;
     }
 
-    private transient NotificationPath _notification;
+    private transient UserDeviceTokenPath _userDeviceToken;
 
     /**
      * Get the implicit to-many join path to the
-     * <code>issuetrack.notification</code> table
+     * <code>issuetrack.user_device_token</code> table
      */
-    public NotificationPath notification() {
-        if (_notification == null)
-            _notification = new NotificationPath(this, null, Keys.NOTIFICATION__FK_USER_TO_NOTIFICATION.getInverseKey());
+    public UserDeviceTokenPath userDeviceToken() {
+        if (_userDeviceToken == null)
+            _userDeviceToken = new UserDeviceTokenPath(this, null, Keys.USER_DEVICE_TOKEN__FK_USERS_TO_USER_DEVICE_TOKEN.getInverseKey());
 
-        return _notification;
+        return _userDeviceToken;
     }
 
     private transient IssuePath _issue;

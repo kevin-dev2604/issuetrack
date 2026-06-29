@@ -2,12 +2,12 @@ package com.kevinj.portfolio.issuetrack.auth;
 
 import com.kevinj.portfolio.issuetrack.FakePasswordEncoder;
 import com.kevinj.portfolio.issuetrack.auth.adapter.out.redis.RefreshTokenStore;
-import com.kevinj.portfolio.issuetrack.auth.application.AuthService;
-import com.kevinj.portfolio.issuetrack.auth.application.dto.LoginCommand;
-import com.kevinj.portfolio.issuetrack.auth.application.dto.LoginResponse;
-import com.kevinj.portfolio.issuetrack.auth.application.dto.RefreshCommand;
-import com.kevinj.portfolio.issuetrack.auth.application.dto.RefreshResponse;
-import com.kevinj.portfolio.issuetrack.auth.application.port.PasswordEncodePort;
+import com.kevinj.portfolio.issuetrack.auth.application.service.AuthService;
+import com.kevinj.portfolio.issuetrack.auth.adapter.in.web.dto.LoginCommand;
+import com.kevinj.portfolio.issuetrack.auth.adapter.in.web.dto.LoginResponse;
+import com.kevinj.portfolio.issuetrack.auth.adapter.in.web.dto.RefreshCommand;
+import com.kevinj.portfolio.issuetrack.auth.adapter.in.web.dto.RefreshResponse;
+import com.kevinj.portfolio.issuetrack.auth.application.port.out.PasswordEncodePort;
 import com.kevinj.portfolio.issuetrack.auth.exception.PasswordDoNotMatchException;
 import com.kevinj.portfolio.issuetrack.auth.exception.RefreshTokenInvalidException;
 import com.kevinj.portfolio.issuetrack.auth.exception.UserNotFoundException;
@@ -16,8 +16,10 @@ import com.kevinj.portfolio.issuetrack.auth.security.FakeTokenProvider;
 import com.kevinj.portfolio.issuetrack.global.enums.UserRole;
 import com.kevinj.portfolio.issuetrack.global.enums.YN;
 import com.kevinj.portfolio.issuetrack.global.secutiry.TokenProvider;
+import com.kevinj.portfolio.issuetrack.global.time.SystemTimeProvider;
 import com.kevinj.portfolio.issuetrack.user.FakeUserPort;
-import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.user.adapter.in.web.dto.UserTokenCommand;
+import com.kevinj.portfolio.issuetrack.user.domain.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,12 +39,18 @@ public class AuthServiceTest {
     private Long userId;
     private String loginId;
     private String loginPw;
+    private UserTokenCommand tokenInfo;
 
     @BeforeEach
     void setUp() {
         userId = fakeUserPort.newId();
         loginId = "kevin.j";
         loginPw = "qw123$";
+        tokenInfo = new UserTokenCommand(
+            "fake-token-123456789",
+            "test",
+            new SystemTimeProvider().now()
+        );
         fakeUserPort.save(new User(
                 userId,
                 loginId,
@@ -59,7 +67,7 @@ public class AuthServiceTest {
 
     @Test
     void issue_accesstoken_and_refreshtoken_upon_successful_login() {
-        LoginResponse response = authService.login(new LoginCommand(loginId, loginPw), "TEST");
+        LoginResponse response = authService.login(new LoginCommand(loginId, loginPw, tokenInfo), "TEST");
 
         assertThat(response).isNotNull();
         assertThat(response.accessToken()).isNotBlank();
@@ -68,7 +76,7 @@ public class AuthServiceTest {
 
     @Test
     void save_the_refreshtoken_upon_successful_login() {
-        LoginResponse response = authService.login(new LoginCommand(loginId, loginPw), "TEST");
+        LoginResponse response = authService.login(new LoginCommand(loginId, loginPw, tokenInfo), "TEST");
 
         assertThat(fakeRefreshTokenStore.get(userId).isPresent()).isTrue();
         // 유즈케이스 테스트 단계이므로 Hash 처리 안함
@@ -77,13 +85,13 @@ public class AuthServiceTest {
 
     @Test
     void login_fails_if_password_does_not_match() {
-        assertThatThrownBy(() -> authService.login(new LoginCommand(loginId, "rtu36%"), "TEST"))
+        assertThatThrownBy(() -> authService.login(new LoginCommand(loginId, "rtu36%", tokenInfo), "TEST"))
                 .isInstanceOf(PasswordDoNotMatchException.class);
     }
 
     @Test
     void login_fails_for_non_existent_ids() {
-        LoginCommand command = new LoginCommand("unsigned_user", "rtu36%");
+        LoginCommand command = new LoginCommand("unsigned_user", "rtu36%", tokenInfo);
 
         assertThatThrownBy(() -> authService.login(command, "TEST"))
                 .isInstanceOf(UserNotFoundException.class);
@@ -94,24 +102,24 @@ public class AuthServiceTest {
         User user = fakeUserPort.loadById(userId).get();
         user.inactive();
 
-        assertThatThrownBy(() -> authService.login(new LoginCommand(loginId, loginPw), "TEST"))
+        assertThatThrownBy(() -> authService.login(new LoginCommand(loginId, loginPw, tokenInfo), "TEST"))
                 .isInstanceOf(UserNotFoundException.class);
     }
 
     @Test
     void save_logs_based_on_results_after_login() {
-        authService.login(new LoginCommand(loginId, loginPw), "TEST");
+        authService.login(new LoginCommand(loginId, loginPw, tokenInfo), "TEST");
         assertThat(fakeLoginLogPort.getLastLog().getIsSuccess()).isEqualTo(YN.Y);
 
         Throwable throwable = catchThrowable(() ->
-                authService.login(new LoginCommand(loginId, "t3gg#"), "TEST"));
+                authService.login(new LoginCommand(loginId, "t3gg#", tokenInfo), "TEST"));
         assertThat(throwable).isInstanceOf(PasswordDoNotMatchException.class);
         assertThat(fakeLoginLogPort.getLastLog().getIsSuccess()).isEqualTo(YN.N);
     }
 
     @Test
     void reissue_token_with_a_valid_refreshtoken() {
-        LoginResponse loginResponse = authService.login(new LoginCommand(loginId, loginPw), "TEST");
+        LoginResponse loginResponse = authService.login(new LoginCommand(loginId, loginPw, tokenInfo), "TEST");
         RefreshResponse refreshResponse = authService.refresh(new RefreshCommand(loginResponse.refreshToken()));
 
         assertThat(refreshResponse).isNotNull();
@@ -121,7 +129,7 @@ public class AuthServiceTest {
 
     @Test
     void if_the_refresh_token_is_not_saved_reissuance_fails() {
-        authService.login(new LoginCommand(loginId, loginPw), "TEST");
+        authService.login(new LoginCommand(loginId, loginPw, tokenInfo), "TEST");
 
         String inValidRefreshToken = fakeTokenProvider.createRefreshToken(userId);
 
@@ -130,7 +138,7 @@ public class AuthServiceTest {
     }
     @Test
     void reissuing_a_token_with_an_accesstoken_fails() {
-        LoginResponse loginResponse = authService.login(new LoginCommand(loginId, loginPw), "TEST");
+        LoginResponse loginResponse = authService.login(new LoginCommand(loginId, loginPw, tokenInfo), "TEST");
 
         assertThatThrownBy(() -> authService.refresh(new RefreshCommand(loginResponse.accessToken())))
                 .isInstanceOf(RefreshTokenInvalidException.class);
@@ -138,7 +146,7 @@ public class AuthServiceTest {
 
     @Test
     void the_refresh_token_is_deleted_when_logout() {
-        LoginResponse loginResponse = authService.login(new LoginCommand(loginId, loginPw), "TEST");
+        LoginResponse loginResponse = authService.login(new LoginCommand(loginId, loginPw, tokenInfo), "TEST");
         authService.logout(new RefreshCommand(loginResponse.refreshToken()));
 
         assertThat(fakeRefreshTokenStore.get(userId).isEmpty()).isTrue();
@@ -146,7 +154,7 @@ public class AuthServiceTest {
 
     @Test
     void reissuing_with_the_same_refreshtoken_after_logout_fails() {
-        LoginResponse loginResponse = authService.login(new LoginCommand(loginId, loginPw), "TEST");
+        LoginResponse loginResponse = authService.login(new LoginCommand(loginId, loginPw, tokenInfo), "TEST");
         RefreshCommand refreshCommand = new RefreshCommand(loginResponse.refreshToken());
         authService.logout(refreshCommand);
 

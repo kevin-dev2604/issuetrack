@@ -1,7 +1,7 @@
 package com.kevinj.portfolio.issuetrack.global.secutiry;
 
-import com.kevinj.portfolio.issuetrack.user.adapter.out.jpa.JpaUserRepository;
-import com.kevinj.portfolio.issuetrack.user.adapter.out.jpa.Users;
+import com.kevinj.portfolio.issuetrack.user.adapter.out.persistence.JpaUserRepository;
+import com.kevinj.portfolio.issuetrack.user.adapter.out.persistence.Users;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,14 +1,14 @@
 package com.kevinj.portfolio.issuetrack.issue.adapter.out;
 
-import com.kevinj.portfolio.issuetrack.admin.adapter.out.jpa.Attributes;
-import com.kevinj.portfolio.issuetrack.admin.adapter.out.jpa.Category;
-import com.kevinj.portfolio.issuetrack.issue.adapter.out.jpa.Issue;
-import com.kevinj.portfolio.issuetrack.issue.adapter.out.jpa.IssueAttributes;
-import com.kevinj.portfolio.issuetrack.issue.domain.IssueAttributesDomain;
-import com.kevinj.portfolio.issuetrack.issue.domain.IssueDomain;
-import com.kevinj.portfolio.issuetrack.process.adapter.out.jpa.Process;
-import com.kevinj.portfolio.issuetrack.process.adapter.out.jpa.Step;
-import com.kevinj.portfolio.issuetrack.user.adapter.out.jpa.Users;
+import com.kevinj.portfolio.issuetrack.admin.adapter.out.persistence.Attributes;
+import com.kevinj.portfolio.issuetrack.admin.adapter.out.persistence.Category;
+import com.kevinj.portfolio.issuetrack.issue.adapter.out.persistence.Issue;
+import com.kevinj.portfolio.issuetrack.issue.adapter.out.persistence.IssueAttributes;
+import com.kevinj.portfolio.issuetrack.issue.domain.model.IssueAttributesDomain;
+import com.kevinj.portfolio.issuetrack.issue.domain.model.IssueDomain;
+import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.Process;
+import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.Step;
+import com.kevinj.portfolio.issuetrack.user.adapter.out.persistence.Users;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

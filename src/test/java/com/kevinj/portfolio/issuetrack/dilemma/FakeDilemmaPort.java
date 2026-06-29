@@ -1,14 +1,14 @@
 package com.kevinj.portfolio.issuetrack.dilemma;
 
 import com.kevinj.portfolio.issuetrack.FakePort;
-import com.kevinj.portfolio.issuetrack.dilemma.application.dto.DilemmaCreateCommand;
-import com.kevinj.portfolio.issuetrack.dilemma.application.dto.DilemmaSearchQuery;
-import com.kevinj.portfolio.issuetrack.dilemma.application.dto.DilemmaSearchResponse;
-import com.kevinj.portfolio.issuetrack.dilemma.application.dto.DilemmaUserSearchQuery;
-import com.kevinj.portfolio.issuetrack.dilemma.application.port.DilemmaPort;
-import com.kevinj.portfolio.issuetrack.dilemma.domain.DilemmaDomain;
+import com.kevinj.portfolio.issuetrack.dilemma.adapter.in.web.dto.DilemmaCreateCommand;
+import com.kevinj.portfolio.issuetrack.dilemma.adapter.in.web.dto.DilemmaSearchQuery;
+import com.kevinj.portfolio.issuetrack.dilemma.adapter.in.web.dto.DilemmaSearchResponse;
+import com.kevinj.portfolio.issuetrack.dilemma.adapter.in.web.dto.DilemmaUserSearchQuery;
+import com.kevinj.portfolio.issuetrack.dilemma.application.port.out.DilemmaPort;
+import com.kevinj.portfolio.issuetrack.dilemma.domain.model.DilemmaDomain;
 import com.kevinj.portfolio.issuetrack.global.enums.YN;
-import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.user.domain.model.User;
 import org.springframework.data.domain.*;
 
 import java.util.HashMap;

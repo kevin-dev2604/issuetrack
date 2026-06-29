@@ -1,10 +1,13 @@
 package com.kevinj.portfolio.issuetrack.admin;
 
 import com.kevinj.portfolio.issuetrack.FakePort;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.AttributesCreateCommand;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.AttributesManageInfoResponse;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.AttributesSearchQuery;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.AttributesUpdateCommand;
 import com.kevinj.portfolio.issuetrack.admin.adapter.out.AttributesMapper;
-import com.kevinj.portfolio.issuetrack.admin.application.dto.*;
-import com.kevinj.portfolio.issuetrack.admin.application.port.AttributesManagePort;
-import com.kevinj.portfolio.issuetrack.admin.domain.AttributesManageInfo;
+import com.kevinj.portfolio.issuetrack.admin.application.port.out.AttributesManagePort;
+import com.kevinj.portfolio.issuetrack.admin.domain.model.AttributesManageInfo;
 import com.kevinj.portfolio.issuetrack.global.time.SystemTimeProvider;
 import com.kevinj.portfolio.issuetrack.global.time.TimeProvider;
 import org.springframework.data.domain.*;

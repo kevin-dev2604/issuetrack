@@ -2,9 +2,9 @@ package com.kevinj.portfolio.issuetrack.global.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.Query;
 import org.jooq.conf.ParamType;
-import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.springframework.boot.jooq.autoconfigure.DefaultConfigurationCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@ public class LocalJooqInlineSqlConfig {
     }
 
     @Slf4j(topic = "com.kevinj.potfolio.common.logging.jooq-inline")
-    static class LocalJooqInlineSqlListener extends DefaultExecuteListener {
+    static class LocalJooqInlineSqlListener implements ExecuteListener {
 
         @Override
         public void renderEnd(ExecuteContext ctx) {

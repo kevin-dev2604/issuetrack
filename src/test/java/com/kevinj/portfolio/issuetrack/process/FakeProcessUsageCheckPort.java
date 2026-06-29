@@ -1,8 +1,8 @@
 package com.kevinj.portfolio.issuetrack.process;
 
 import com.kevinj.portfolio.issuetrack.issue.FakeIssuePort;
-import com.kevinj.portfolio.issuetrack.process.application.port.ProcessUsageCheckPort;
-import com.kevinj.portfolio.issuetrack.user.domain.User;
+import com.kevinj.portfolio.issuetrack.process.application.port.out.ProcessUsageCheckPort;
+import com.kevinj.portfolio.issuetrack.user.domain.model.User;
 
 public class FakeProcessUsageCheckPort implements ProcessUsageCheckPort {
 

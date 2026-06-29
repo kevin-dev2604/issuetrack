@@ -1,8 +1,8 @@
 package com.kevinj.portfolio.issuetrack.admin.adapter.out;
 
-import com.kevinj.portfolio.issuetrack.admin.adapter.out.jpa.Category;
-import com.kevinj.portfolio.issuetrack.admin.application.dto.CategoryManageInfoResponse;
-import com.kevinj.portfolio.issuetrack.admin.domain.CategoryManageInfo;
+import com.kevinj.portfolio.issuetrack.admin.adapter.out.persistence.Category;
+import com.kevinj.portfolio.issuetrack.admin.adapter.in.web.dto.CategoryManageInfoResponse;
+import com.kevinj.portfolio.issuetrack.admin.domain.model.CategoryManageInfo;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 

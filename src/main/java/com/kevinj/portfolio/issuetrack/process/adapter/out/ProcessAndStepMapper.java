@@ -1,12 +1,12 @@
 package com.kevinj.portfolio.issuetrack.process.adapter.out;
 
-import com.kevinj.portfolio.issuetrack.process.adapter.out.jpa.Process;
-import com.kevinj.portfolio.issuetrack.process.adapter.out.jpa.Step;
-import com.kevinj.portfolio.issuetrack.process.application.dto.process.ProcessInfoResponse;
-import com.kevinj.portfolio.issuetrack.process.application.dto.step.StepInfoResponse;
-import com.kevinj.portfolio.issuetrack.process.domain.ProcessDomain;
-import com.kevinj.portfolio.issuetrack.process.domain.StepDomain;
-import com.kevinj.portfolio.issuetrack.user.adapter.out.jpa.Users;
+import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.Process;
+import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.Step;
+import com.kevinj.portfolio.issuetrack.process.adapter.in.web.dto.process.ProcessInfoResponse;
+import com.kevinj.portfolio.issuetrack.process.adapter.in.web.dto.step.StepInfoResponse;
+import com.kevinj.portfolio.issuetrack.process.domain.model.ProcessDomain;
+import com.kevinj.portfolio.issuetrack.process.domain.model.StepDomain;
+import com.kevinj.portfolio.issuetrack.user.adapter.out.persistence.Users;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 

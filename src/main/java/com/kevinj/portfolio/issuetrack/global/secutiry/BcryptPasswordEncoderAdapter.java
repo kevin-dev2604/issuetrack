@@ -1,6 +1,6 @@
 package com.kevinj.portfolio.issuetrack.global.secutiry;
 
-import com.kevinj.portfolio.issuetrack.auth.application.port.PasswordEncodePort;
+import com.kevinj.portfolio.issuetrack.auth.application.port.out.PasswordEncodePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
