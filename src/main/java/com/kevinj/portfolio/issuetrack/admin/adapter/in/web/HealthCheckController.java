@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class HealthCheckController {
 
     @Operation(
-        summary = "Category Search",
-        description = "Admin account can search category information"
+        summary = "health check",
+        description = "only for health checks"
     )
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "success"),
