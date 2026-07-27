@@ -21,7 +21,7 @@ import java.util.Optional;
 public class ProcessPersistenceAdapter implements ProcessPort {
 
     private final ProcessQueryRepository queryRepository;
-    private final JpaProcessRepositiry jpaProcessRepositiry;
+    private final JpaProcessRepository jpaProcessRepository;
     private final UserMapper userMapper;
     private final ProcessAndStepMapper mapper;
 
@@ -38,31 +38,31 @@ public class ProcessPersistenceAdapter implements ProcessPort {
 
     @Override
     public Optional<ProcessDomain> getProcessIncludingDeleted(User user, Long processId) {
-        return jpaProcessRepositiry.findByProcessIdAndUser(processId, userMapper.toUsersEntity(user))
+        return jpaProcessRepository.findByProcessIdAndUser(processId, userMapper.toUsersEntity(user))
                 .map(mapper::toProcessDomain);
     }
 
     @Override
     public Optional<ProcessDomain> getProcessUnscoped(Long processId) {
-        return jpaProcessRepositiry.findById(processId)
+        return jpaProcessRepository.findById(processId)
                 .map(mapper::toProcessDomain);
     }
 
     @Override
     public void createProcess(User user, ProcessCreateCommand command) {
         Process process = new Process(null, userMapper.toUsersEntity(user), command.name(), command.note(), command.isActive());
-        jpaProcessRepositiry.save(process);
+        jpaProcessRepository.save(process);
     }
 
     @Override
     public void saveProcess(ProcessDomain process, User user) {
         Process entity = mapper.toProcessEntity(process, userMapper.toUsersEntity(user));
-        jpaProcessRepositiry.save(entity);
+        jpaProcessRepository.save(entity);
     }
 
     @Override
     public boolean isUserProcess(User user, Long processId) {
-        Process process = jpaProcessRepositiry.findById(processId)
+        Process process = jpaProcessRepository.findById(processId)
                 .orElseThrow(() -> new EntityNotFoundException("Process not found"));
 
         return process.getUser().equals(userMapper.toUsersEntity(user));

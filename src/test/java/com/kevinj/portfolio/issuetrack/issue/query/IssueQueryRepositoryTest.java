@@ -12,7 +12,7 @@ import com.kevinj.portfolio.issuetrack.issue.adapter.out.persistence.query.Issue
 import com.kevinj.portfolio.issuetrack.issue.adapter.in.web.dto.IssueSearchCommand;
 import com.kevinj.portfolio.issuetrack.issue.adapter.in.web.dto.IssueSearchResponse;
 import com.kevinj.portfolio.issuetrack.issue.domain.model.enums.IssueStatus;
-import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.JpaProcessRepositiry;
+import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.JpaProcessRepository;
 import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.JpaStepRepository;
 import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.Process;
 import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.Step;
@@ -42,7 +42,7 @@ public class IssueQueryRepositoryTest {
     private JpaCategoryRepository categoryRepository;
 
     @Autowired
-    private JpaProcessRepositiry processRepositiry;
+    private JpaProcessRepository processRepositiry;
 
     @Autowired
     private JpaStepRepository stepRepository;
@@ -288,7 +288,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.HANDLING
+                IssueStatus.HANDLING,
+                null
             )
         );
 
@@ -302,7 +303,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.PENDING
+                IssueStatus.PENDING,
+                null
             )
         );
 
@@ -316,7 +318,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.HIDDEN
+                IssueStatus.HIDDEN,
+                null
             )
         );
 
@@ -330,7 +333,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.DILEMMA
+                IssueStatus.DILEMMA,
+                null
             )
         );
 
@@ -344,7 +348,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.EXIT
+                IssueStatus.EXIT,
+                null
             )
         );
 
@@ -358,7 +363,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.HANDLING
+                IssueStatus.HANDLING,
+                null
             )
         );
 
@@ -372,7 +378,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.PENDING
+                IssueStatus.PENDING,
+                null
             )
         );
 
@@ -386,7 +393,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.HIDDEN
+                IssueStatus.HIDDEN,
+                null
             )
         );
 
@@ -400,7 +408,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.DILEMMA
+                IssueStatus.DILEMMA,
+                null
             )
         );
 
@@ -414,7 +423,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.EXIT
+                IssueStatus.EXIT,
+                null
             )
         );
 
@@ -428,7 +438,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.HANDLING
+                IssueStatus.HANDLING,
+                null
             )
         );
 
@@ -442,7 +453,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.PENDING
+                IssueStatus.PENDING,
+                null
             )
         );
 
@@ -456,7 +468,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.HIDDEN
+                IssueStatus.HIDDEN,
+                null
             )
         );
 
@@ -470,7 +483,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.DILEMMA
+                IssueStatus.DILEMMA,
+                null
             )
         );
 
@@ -484,7 +498,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.EXIT
+                IssueStatus.EXIT,
+                null
             )
         );
 
@@ -498,7 +513,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.HANDLING
+                IssueStatus.HANDLING,
+                null
             )
         );
 
@@ -512,7 +528,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.PENDING
+                IssueStatus.PENDING,
+                null
             )
         );
 
@@ -526,7 +543,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.HIDDEN
+                IssueStatus.HIDDEN,
+                null
             )
         );
 
@@ -540,7 +558,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.DILEMMA
+                IssueStatus.DILEMMA,
+                null
             )
         );
 
@@ -554,7 +573,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.EXIT
+                IssueStatus.EXIT,
+                null
             )
         );
 
@@ -568,7 +588,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.HANDLING
+                IssueStatus.HANDLING,
+                null
             )
         );
 
@@ -582,7 +603,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.PENDING
+                IssueStatus.PENDING,
+                null
             )
         );
 
@@ -596,7 +618,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.HIDDEN
+                IssueStatus.HIDDEN,
+                null
             )
         );
 
@@ -610,7 +633,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.DILEMMA
+                IssueStatus.DILEMMA,
+                null
             )
         );
 
@@ -624,7 +648,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.EXIT
+                IssueStatus.EXIT,
+                null
             )
         );
 
@@ -638,7 +663,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.HANDLING
+                IssueStatus.HANDLING,
+                null
             )
         );
 
@@ -652,7 +678,8 @@ public class IssueQueryRepositoryTest {
                 steps.get(new Random().nextInt(steps.size())),
                 String.format("issue search test data #%02d",  titleCnt++),
                 "for search and statistics tests",
-                IssueStatus.PENDING
+                IssueStatus.PENDING,
+                null
             )
         );
     }

@@ -69,7 +69,8 @@ class IssueControllerTest {
             1L,
             List.of(),
             "mock test title",
-            "mock test details"
+            "mock test details",
+            null
         );
         // when
         mockMvc.perform(post("/issue/create")
@@ -125,7 +126,8 @@ class IssueControllerTest {
             3L,
             List.of(),
             "edited title",
-            "edited details"
+            "edited details",
+            null
         );
         // when
         doThrow(new IssueNotFoundException())

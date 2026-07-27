@@ -189,7 +189,6 @@ public class FakeIssuePort implements IssuePort, FakePort {
                 issue.getCategoryId(),
                 null,
                 null,
-                List.of(),
                 issue.getProcessId(),
                 null,
                 issue.getCurrentStepId(),
@@ -199,6 +198,17 @@ public class FakeIssuePort implements IssuePort, FakePort {
                 issue.getCreatedAt(),
                 issue.getUpdatedAt()
         );
+    }
+
+    @Override
+    public void saveIssueFiles(Long issueId, List<Long> fileIdList) {
+        // no action in fake port tests
+    }
+
+    @Override
+    public List<Long> getIssueFileIds(Long issueId) {
+        // no action in fake port tests
+        return List.of();
     }
 
     @Override

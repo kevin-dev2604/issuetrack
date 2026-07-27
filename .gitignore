@@ -40,4 +40,6 @@ out/
 docker-data/
 
 .env
+.env.production
 src/main/resources/*.json
+src/main/resources/*-secret.*

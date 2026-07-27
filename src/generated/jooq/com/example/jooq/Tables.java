@@ -10,9 +10,11 @@ import com.example.jooq.tables.Dilemma;
 import com.example.jooq.tables.DilemmaDiscussion;
 import com.example.jooq.tables.Issue;
 import com.example.jooq.tables.IssueAttributes;
+import com.example.jooq.tables.IssueFiles;
 import com.example.jooq.tables.LoginLog;
 import com.example.jooq.tables.Process;
 import com.example.jooq.tables.Step;
+import com.example.jooq.tables.UploadFiles;
 import com.example.jooq.tables.UserDeviceToken;
 import com.example.jooq.tables.Users;
 
@@ -54,6 +56,11 @@ public class Tables {
     public static final IssueAttributes ISSUE_ATTRIBUTES = IssueAttributes.ISSUE_ATTRIBUTES;
 
     /**
+     * Issue containing files
+     */
+    public static final IssueFiles ISSUE_FILES = IssueFiles.ISSUE_FILES;
+
+    /**
      * The table <code>issuetrack.login_log</code>.
      */
     public static final LoginLog LOGIN_LOG = LoginLog.LOGIN_LOG;
@@ -67,6 +74,11 @@ public class Tables {
      * The table <code>issuetrack.step</code>.
      */
     public static final Step STEP = Step.STEP;
+
+    /**
+     * File upload management
+     */
+    public static final UploadFiles UPLOAD_FILES = UploadFiles.UPLOAD_FILES;
 
     /**
      * User FCM device token information

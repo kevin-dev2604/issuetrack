@@ -22,6 +22,8 @@ public interface IssuePort {
     void saveIssueAttributes(IssueAttributesDomain issueAttributesDomain);
     Page<IssueSearchResponse> searchIssues(Long userId, IssueSearchQuery query);
     IssueDetailResponse getIssueDetails(User user, Long issueId);
+    void saveIssueFiles(Long issueId, List<Long> fileIdList);
+    List<Long> getIssueFileIds(Long issueId);
 
     // Belows are test-only methods. Do not use in production.
     List<IssueDomain> getAllIssueList();

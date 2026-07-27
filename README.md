@@ -91,6 +91,7 @@ src/main/java
      ┣ issue        # 이슈 관리 (Issue Management)
      ┣ dilemma      # 토론 및 딜레마 (Dilemma Community)
      ┣ admin        # 통계 및 어드민 (Admin & jOOQ Statistics)
+     ┣ storage      # 저장소 및 파일첨부 (Storage & File Uploads)
      ┗ global       # 공통 예외 및 설정 (Global Config & Exception)
 ```
 
@@ -106,9 +107,13 @@ src/main/java
 
 ```Bash
 git clone https://github.com/kevin-dev2604/issuetrack.git
+# 로컬에서 바로 실행할 경우
 cd issuetrack
-docker compose up -d
 ./gradlew bootRun
+
+# 로컬 docker에 올려서 실행할 경우
+cd issuetrack
+docker-compose up --build -d
 ```
 
 ### 빌드 및 테스트 (Build & Test)
@@ -129,14 +134,14 @@ http://localhost:8080/swagger-ui/index.html
 ---
 
 ## 💡 프로젝트를 통해 증명하고자 하는 것 (What this project demonstrates)
-* 실무 중심의 문제 해결: 단순 CRUD를 넘어 OAuth2, FCM 푸시, 통계 전용 쿼리 튜닝(jOOQ) 등 실제 프로덕션 수준의 기술적 고민 반영
-* 유지보수하기 좋은 코드: 유즈케이스 기반의 레이어드 아키텍처와 깔끔한 패키지 구조 설계 능력
-* 효율적인 도구 선택: 표준 비즈니스 로직(JPA/QueryDSL)과 통계 분석(jOOQ)의 역할을 명확히 분리하는 안목
-* 인프라 자동화 구성: Docker Compose를 활용하여 언제 어디서나 즉시 구동 가능한 샌드박스 환경 구축
-* Designing a backend system around strict domain rules and clear use cases.
-* Implementing secure APIs with Spring Boot, combining social logins and robust validation.
-* Choosing the right query tool (QueryDSL vs jOOQ) for the specific performance and maintenance goal.
-* Setting up a reproducible and fully documented local development ecosystem.
+* 실무 중심의 문제 해결: 단순 CRUD를 넘어 OAuth2, FCM 푸시, 통계 전용 쿼리 튜닝(jOOQ) 등 실제 프로덕션 수준의 기술적 고민 반영  
+Designing a backend system around strict domain rules and clear use cases.
+* 유지보수하기 좋은 코드: 유즈케이스 기반의 레이어드 아키텍처와 깔끔한 패키지 구조 설계 능력  
+Implementing secure APIs with Spring Boot, combining social logins and robust validation.
+* 효율적인 도구 선택: 표준 비즈니스 로직(JPA/QueryDSL)과 통계 분석(jOOQ)의 역할을 명확히 분리하는 안목  
+Choosing the right query tool (QueryDSL vs jOOQ) for the specific performance and maintenance goal.
+* 인프라 자동화 구성: Docker Compose를 활용하여 언제 어디서나 즉시 구동 가능한 샌드박스 환경 구축  
+Setting up a reproducible and fully documented local development ecosystem.
 
 ---
 

@@ -7,7 +7,8 @@ public record IssueCreateCommand(
         Long processId,
         List<IssueAttributesBasicInfo> issueAttributes,
         String title,
-        String details
+        String details,
+        List<Long> fileIds
 ) {
 
     public boolean isValid() {

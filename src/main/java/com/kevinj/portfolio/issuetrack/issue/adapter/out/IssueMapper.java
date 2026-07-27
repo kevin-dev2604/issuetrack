@@ -34,7 +34,8 @@ public class IssueMapper {
             currentStep,
             issueDomain.getTitle(),
             issueDomain.getDetails(),
-            issueDomain.getStatus()
+            issueDomain.getStatus(),
+            null
         );
 
     }

@@ -53,4 +53,7 @@ public class Issue extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private IssueStatus status;
 
+    @OneToMany(mappedBy = "issue")
+    private List<IssueFiles> issueFileList = new ArrayList<>();
+
 }

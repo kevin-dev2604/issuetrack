@@ -10,9 +10,11 @@ import com.example.jooq.tables.Dilemma;
 import com.example.jooq.tables.DilemmaDiscussion;
 import com.example.jooq.tables.Issue;
 import com.example.jooq.tables.IssueAttributes;
+import com.example.jooq.tables.IssueFiles;
 import com.example.jooq.tables.LoginLog;
 import com.example.jooq.tables.Process;
 import com.example.jooq.tables.Step;
+import com.example.jooq.tables.UploadFiles;
 import com.example.jooq.tables.UserDeviceToken;
 import com.example.jooq.tables.Users;
 
@@ -68,6 +70,11 @@ public class Issuetrack extends SchemaImpl {
     public final IssueAttributes ISSUE_ATTRIBUTES = IssueAttributes.ISSUE_ATTRIBUTES;
 
     /**
+     * Issue containing files
+     */
+    public final IssueFiles ISSUE_FILES = IssueFiles.ISSUE_FILES;
+
+    /**
      * The table <code>issuetrack.login_log</code>.
      */
     public final LoginLog LOGIN_LOG = LoginLog.LOGIN_LOG;
@@ -81,6 +88,11 @@ public class Issuetrack extends SchemaImpl {
      * The table <code>issuetrack.step</code>.
      */
     public final Step STEP = Step.STEP;
+
+    /**
+     * File upload management
+     */
+    public final UploadFiles UPLOAD_FILES = UploadFiles.UPLOAD_FILES;
 
     /**
      * User FCM device token information
@@ -114,9 +126,11 @@ public class Issuetrack extends SchemaImpl {
             DilemmaDiscussion.DILEMMA_DISCUSSION,
             Issue.ISSUE,
             IssueAttributes.ISSUE_ATTRIBUTES,
+            IssueFiles.ISSUE_FILES,
             LoginLog.LOGIN_LOG,
             Process.PROCESS,
             Step.STEP,
+            UploadFiles.UPLOAD_FILES,
             UserDeviceToken.USER_DEVICE_TOKEN,
             Users.USERS
         );

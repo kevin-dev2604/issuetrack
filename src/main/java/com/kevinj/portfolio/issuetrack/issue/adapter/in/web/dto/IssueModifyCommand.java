@@ -7,7 +7,8 @@ public record IssueModifyCommand(
         Long categoryId,
         List<IssueAttributesModifyInfo> issueAttributes,
         String title,
-        String details
+        String details,
+        List<Long> fileIds
 ) {
 
     public boolean isValid() {

@@ -24,6 +24,7 @@ import com.kevinj.portfolio.issuetrack.process.adapter.in.web.dto.process.Proces
 import com.kevinj.portfolio.issuetrack.process.adapter.in.web.dto.step.StepCreateInfo;
 import com.kevinj.portfolio.issuetrack.process.domain.model.ProcessDomain;
 import com.kevinj.portfolio.issuetrack.process.exception.process.ProcessNotFoundException;
+import com.kevinj.portfolio.issuetrack.storage.FakeFilePersistencePort;
 import com.kevinj.portfolio.issuetrack.user.FakeUserPort;
 import com.kevinj.portfolio.issuetrack.user.domain.model.User;
 import org.assertj.core.util.Lists;
@@ -50,15 +51,17 @@ public class IssueServiceTest {
     private final FakeAttributeManagePort fakeAttributeManagePort = new FakeAttributeManagePort(attributesMapper);
     private final FakeProcessPort fakeProcessPort = new FakeProcessPort(processAndStepMapper);
     private final FakeStepPort fakeStepPort = new FakeStepPort(processAndStepMapper);
+    private final FakeFilePersistencePort fakeFilePersistencePort = new FakeFilePersistencePort();
 
     private final FakeIssuePort fakeIssuePort = new FakeIssuePort();
     private final IssueService issueService = new IssueService(
-            fakeUserPort,
-            fakeCategoryManagePort,
-            fakeAttributeManagePort,
-            fakeProcessPort,
-            fakeStepPort,
-            fakeIssuePort
+        fakeUserPort,
+        fakeCategoryManagePort,
+        fakeAttributeManagePort,
+        fakeProcessPort,
+        fakeStepPort,
+        fakeIssuePort,
+        fakeFilePersistencePort
     );
 
     @BeforeEach
@@ -160,32 +163,33 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         assertThatNoException().isThrownBy(() -> issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
+            )
         ));
 
     }
@@ -198,36 +202,36 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                    new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         Long categoryId = fakeCategoryManagePort.lastId() + 1;
 
         assertThatException().isThrownBy(() -> issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        categoryId,
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                categoryId,
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
             )
-        ).isInstanceOf(InvalidInputException.class);
+        )).isInstanceOf(InvalidInputException.class);
 
     }
 
@@ -243,16 +247,16 @@ public class IssueServiceTest {
         attributesCreateInfoList.add(new IssueAttributesBasicInfo(fakeCategoryManagePort.lastId() + 2, "test values"));
 
         assertThatException().isThrownBy(() -> issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
             )
-        ).isInstanceOf(InvalidInputException.class);
+        )).isInstanceOf(InvalidInputException.class);
 
     }
 
@@ -263,34 +267,34 @@ public class IssueServiceTest {
         Long processId = fakeProcessPort.lastId() + 1;
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                    new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         assertThatException().isThrownBy(() -> issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        processId,
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                processId,
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
             )
-        ).isInstanceOf(ProcessNotFoundException.class);
+        )).isInstanceOf(ProcessNotFoundException.class);
 
     }
 
@@ -301,34 +305,34 @@ public class IssueServiceTest {
         ProcessDomain process = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                    new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         assertThatException().isThrownBy(() -> issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
             )
-        ).isInstanceOf(EmptyProcessException.class);
+        )).isInstanceOf(EmptyProcessException.class);
 
     }
 
@@ -339,56 +343,58 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                    new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         IssueCreateCommand issueCreateCommand = new IssueCreateCommand(
-                fakeCategoryManagePort.lastId(),
-                process.getProcessId(),
-                attributesCreateInfoList,
-                "Test case management issue",
-                "I consider about organizing practical test cases."
+            fakeCategoryManagePort.lastId(),
+            process.getProcessId(),
+            attributesCreateInfoList,
+            "Test case management issue",
+            "I consider about organizing practical test cases.",
+            List.of()
         );
 
         issueService.createIssue(
-                user.getUserId(),
-                issueCreateCommand
+            user.getUserId(),
+            issueCreateCommand
         );
 
         Long issueId = fakeIssuePort.lastId();
 
         Long categoryId = fakeCategoryManagePort.lastId() - 1;
         List<IssueAttributesModifyInfo> attributesModifyInfoList = fakeIssuePort.getIssueAttributesList(user, issueId)
-                .stream()
-                .map(issueAttributes ->
-                        new IssueAttributesModifyInfo(
-                                issueAttributes.getId(),
-                                issueAttributes.getAttributesId(),
-                                "modified test values"
-                        )
+            .stream()
+            .map(issueAttributes ->
+                new IssueAttributesModifyInfo(
+                    issueAttributes.getId(),
+                    issueAttributes.getAttributesId(),
+                    "modified test values"
                 )
-                .toList();
+            )
+            .toList();
 
         IssueModifyCommand issueModifyCommand = new IssueModifyCommand(
-                fakeIssuePort.lastId(),
-                categoryId,
-                attributesModifyInfoList,
-                "Modified Test case management issue",
-                "I consider about organizing practical test cases. Additionally i want best cases."
+            fakeIssuePort.lastId(),
+            categoryId,
+            attributesModifyInfoList,
+            "Modified Test case management issue",
+            "I consider about organizing practical test cases. Additionally i want best cases.",
+            List.of()
         );
 
         assertThatNoException().isThrownBy(() -> issueService.changeIssueInfo(user.getUserId(), issueModifyCommand));
@@ -412,34 +418,35 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                    new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         IssueCreateCommand issueCreateCommand = new IssueCreateCommand(
-                fakeCategoryManagePort.lastId(),
-                process.getProcessId(),
-                attributesCreateInfoList,
-                "Test case management issue",
-                "I consider about organizing practical test cases."
+            fakeCategoryManagePort.lastId(),
+            process.getProcessId(),
+            attributesCreateInfoList,
+            "Test case management issue",
+            "I consider about organizing practical test cases.",
+            List.of()
         );
 
         issueService.createIssue(
-                user.getUserId(),
-                issueCreateCommand
+            user.getUserId(),
+            issueCreateCommand
         );
 
         Long issueId = fakeIssuePort.lastId();
@@ -453,78 +460,81 @@ public class IssueServiceTest {
         // case #1 : invalid category
         Long categoryId = fakeCategoryManagePort.lastId() + 3;
         List<IssueAttributesModifyInfo> attributesModifyInfoList = fakeIssuePort.getIssueAttributesList(user, issueId)
-                .stream()
-                .map(issueAttributes ->
-                        new IssueAttributesModifyInfo(
-                                issueAttributes.getId(),
-                                issueAttributes.getAttributesId(),
-                                "modified test values"
-                        )
+            .stream()
+            .map(issueAttributes ->
+                new IssueAttributesModifyInfo(
+                    issueAttributes.getId(),
+                    issueAttributes.getAttributesId(),
+                    "modified test values"
                 )
-                .toList();
+            )
+            .toList();
 
         IssueModifyCommand issueModifyCommand = new IssueModifyCommand(
-                fakeIssuePort.lastId(),
-                categoryId,
-                attributesModifyInfoList,
-                "Modified Test case management issue",
-                "I consider about organizing practical test cases. Additionally i want best cases."
+            fakeIssuePort.lastId(),
+            categoryId,
+            attributesModifyInfoList,
+            "Modified Test case management issue",
+            "I consider about organizing practical test cases. Additionally i want best cases.",
+            List.of()
         );
 
         assertThatException().isThrownBy(() -> issueService.changeIssueInfo(user.getUserId(), issueModifyCommand))
-                .isInstanceOf(InvalidInputException.class);
+            .isInstanceOf(InvalidInputException.class);
     }
 
     private void invalidCase2(User user, Long issueId) {
         // case #2 : invalid attributes
         Long categoryId = fakeCategoryManagePort.lastId();
         List<IssueAttributesModifyInfo> attributesModifyInfoList = fakeIssuePort.getIssueAttributesList(user, issueId)
-                .stream()
-                .map(issueAttributes ->
-                        new IssueAttributesModifyInfo(
-                                issueAttributes.getId(),
-                                issueAttributes.getAttributesId() + 100,
-                                "modified test values"
-                        )
+            .stream()
+            .map(issueAttributes ->
+                new IssueAttributesModifyInfo(
+                    issueAttributes.getId(),
+                    issueAttributes.getAttributesId() + 100,
+                    "modified test values"
                 )
-                .toList();
+            )
+            .toList();
 
         IssueModifyCommand issueModifyCommand = new IssueModifyCommand(
-                fakeIssuePort.lastId(),
-                categoryId,
-                attributesModifyInfoList,
-                "Modified Test case management issue",
-                "I consider about organizing practical test cases. Additionally i want best cases."
+            fakeIssuePort.lastId(),
+            categoryId,
+            attributesModifyInfoList,
+            "Modified Test case management issue",
+            "I consider about organizing practical test cases. Additionally i want best cases.",
+            List.of()
         );
 
         assertThatException().isThrownBy(() -> issueService.changeIssueInfo(user.getUserId(), issueModifyCommand))
-                .isInstanceOf(InvalidInputException.class);
+            .isInstanceOf(InvalidInputException.class);
     }
 
     private void invalidCase3(User user, Long issueId) {
         // case #3 : invalid title
         Long categoryId = fakeCategoryManagePort.lastId();
         List<IssueAttributesModifyInfo> attributesModifyInfoList = fakeIssuePort.getIssueAttributesList(user, issueId)
-                .stream()
-                .map(issueAttributes ->
-                        new IssueAttributesModifyInfo(
-                                issueAttributes.getId(),
-                                issueAttributes.getAttributesId(),
-                                "modified test values"
-                        )
+            .stream()
+            .map(issueAttributes ->
+                new IssueAttributesModifyInfo(
+                    issueAttributes.getId(),
+                    issueAttributes.getAttributesId(),
+                    "modified test values"
                 )
-                .toList();
+            )
+            .toList();
 
         IssueModifyCommand issueModifyCommand = new IssueModifyCommand(
-                fakeIssuePort.lastId(),
-                categoryId,
-                attributesModifyInfoList,
-                " ",
-                "I consider about organizing practical test cases. Additionally i want best cases."
+            fakeIssuePort.lastId(),
+            categoryId,
+            attributesModifyInfoList,
+            " ",
+            "I consider about organizing practical test cases. Additionally i want best cases.",
+            List.of()
         );
 
         assertThatException().isThrownBy(() -> issueService.changeIssueInfo(user.getUserId(), issueModifyCommand))
-                .isInstanceOf(InvalidInputException.class);
+            .isInstanceOf(InvalidInputException.class);
     }
 
     @Test
@@ -535,32 +545,33 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
+            )
         );
 
         Long issueId = fakeIssuePort.lastId();
@@ -576,32 +587,33 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
+            )
         );
 
         Long issueId = fakeIssuePort.lastId();
@@ -616,7 +628,7 @@ public class IssueServiceTest {
         issueService.proceedIssue(user.getUserId(), issueId);
 
         assertThatException().isThrownBy(() -> issueService.proceedIssue(user.getUserId(), issueId))
-                .isInstanceOf(CannotProceedNextStepException.class);
+            .isInstanceOf(CannotProceedNextStepException.class);
     }
 
     @Test
@@ -626,32 +638,33 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
+            )
         );
 
         Long issueId = fakeIssuePort.lastId();
@@ -667,32 +680,33 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
+            )
         );
 
         Long issueId = fakeIssuePort.lastId();
@@ -700,22 +714,23 @@ public class IssueServiceTest {
 
         Long categoryId = fakeCategoryManagePort.lastId() - 1;
         List<IssueAttributesModifyInfo> attributesModifyInfoList = fakeIssuePort.getIssueAttributesList(user, issueId)
-                .stream()
-                .map(issueAttributes ->
-                        new IssueAttributesModifyInfo(
-                                issueAttributes.getId(),
-                                issueAttributes.getAttributesId(),
-                                "modified test values"
-                        )
+            .stream()
+            .map(issueAttributes ->
+                new IssueAttributesModifyInfo(
+                    issueAttributes.getId(),
+                    issueAttributes.getAttributesId(),
+                    "modified test values"
                 )
-                .toList();
+            )
+            .toList();
 
         IssueModifyCommand issueModifyCommand = new IssueModifyCommand(
-                fakeIssuePort.lastId(),
-                categoryId,
-                attributesModifyInfoList,
-                "Modified Test case management issue",
-                "I consider about organizing practical test cases. Additionally i want best cases."
+            fakeIssuePort.lastId(),
+            categoryId,
+            attributesModifyInfoList,
+            "Modified Test case management issue",
+            "I consider about organizing practical test cases. Additionally i want best cases.",
+            List.of()
         );
 
         assertThatException().isThrownBy(() -> issueService.changeIssueInfo(user.getUserId(), issueModifyCommand))
@@ -729,39 +744,40 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
+            )
         );
 
         Long issueId = fakeIssuePort.lastId();
         issueService.changeStatus(user.getUserId(), issueId, IssueStatus.PENDING);
 
         assertThatException().isThrownBy(() -> issueService.proceedIssue(user.getUserId(), issueId))
-                .isInstanceOf(DisabledStatusException.class);
+            .isInstanceOf(DisabledStatusException.class);
 
         issueService.changeStatus(user.getUserId(), issueId, IssueStatus.HANDLING);
         assertThatNoException().isThrownBy(() -> issueService.proceedIssue(user.getUserId(), issueId));
@@ -774,39 +790,40 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
+            )
         );
 
         Long issueId = fakeIssuePort.lastId();
 
         fakeProcessPort.createProcess(
-                user,
-                new ProcessCreateCommand("My second process", "", YN.Y)
+            user,
+            new ProcessCreateCommand("My second process", "", YN.Y)
         );
 
         ProcessDomain process2 = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
@@ -824,43 +841,44 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
+            )
         );
 
         Long issueId = fakeIssuePort.lastId();
 
         fakeProcessPort.createProcess(
-                user,
-                new ProcessCreateCommand("My second process", "", YN.Y)
+            user,
+            new ProcessCreateCommand("My second process", "", YN.Y)
         );
 
         assertThatException().isThrownBy(() -> issueService.changeProcess(user.getUserId(), issueId, fakeProcessPort.lastId()))
-                .isInstanceOf(EmptyProcessException.class);
+            .isInstanceOf(EmptyProcessException.class);
     }
 
     @Test
@@ -870,46 +888,47 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Test case management issue",
-                        "I consider about organizing practical test cases."
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Test case management issue",
+                "I consider about organizing practical test cases.",
+                List.of()
+            )
         );
 
         Long issueId = fakeIssuePort.lastId();
         issueService.changeStatus(user.getUserId(), issueId, IssueStatus.EXIT);
 
         fakeProcessPort.createProcess(
-                user,
-                new ProcessCreateCommand("My second process", "", YN.Y)
+            user,
+            new ProcessCreateCommand("My second process", "", YN.Y)
         );
 
         ProcessDomain process2 = fakeProcessPort.getProcess(user, fakeProcessPort.lastId()).get();
 
         assertThatException().isThrownBy(() -> issueService.changeProcess(user.getUserId(), issueId, process2.getProcessId()))
-                .isInstanceOf(DisabledStatusException.class);
+            .isInstanceOf(DisabledStatusException.class);
     }
 
     @Test
@@ -919,54 +938,57 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Issue domain development",
-                        "test case issues"
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Issue domain development",
+                "test case issues",
+                List.of()
+            )
         );
 
         issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Dilemma domain design",
-                        "considering about use case and business logic"
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Dilemma domain design",
+                "considering about use case and business logic",
+                List.of()
+            )
         );
 
         issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Statistics Implementation",
-                        "test case issues about jooq library using"
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Statistics Implementation",
+                "test case issues about jooq library using",
+                List.of()
+            )
         );
 
         IssueSearchCommand searchCommand = new IssueSearchCommand(null, null, null, null, null, null, "domain", null);
@@ -982,42 +1004,43 @@ public class IssueServiceTest {
         createBasicSteps(user, process);
 
         AttributesSearchCommand attributesSearchCommand = new AttributesSearchCommand(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         );
 
         List<IssueAttributesBasicInfo> attributesCreateInfoList = fakeAttributeManagePort
-                .searchList(attributesSearchCommand.toQuery())
-                .getContent()
-                .stream()
-                .map(attributesManageInfoResponse ->
-                        new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
-                )
-                .toList();
+            .searchList(attributesSearchCommand.toQuery())
+            .getContent()
+            .stream()
+            .map(attributesManageInfoResponse ->
+                new IssueAttributesBasicInfo(attributesManageInfoResponse.attributesId(), "test values")
+            )
+            .toList();
 
         issueService.createIssue(
-                user.getUserId(),
-                new IssueCreateCommand(
-                        fakeCategoryManagePort.lastId(),
-                        process.getProcessId(),
-                        attributesCreateInfoList,
-                        "Dilemma domain design",
-                        "considering about use case and business logic"
-                )
+            user.getUserId(),
+            new IssueCreateCommand(
+                fakeCategoryManagePort.lastId(),
+                process.getProcessId(),
+                attributesCreateInfoList,
+                "Dilemma domain design",
+                "considering about use case and business logic",
+                List.of()
+            )
         );
 
         Long issueId = fakeIssuePort.lastId();
         IssueDetailResponse detailResponse = issueService.getIssueDetails(user.getUserId(), issueId);
 
         assertThat(detailResponse).isNotNull();
-        assertThat(detailResponse.categoryId()).isEqualTo(fakeCategoryManagePort.lastId());
-        assertThat(detailResponse.processId()).isEqualTo(process.getProcessId());
-        assertThat(detailResponse.title()).isEqualTo("Dilemma domain design");
-        assertThat(detailResponse.details()).isEqualTo("considering about use case and business logic");
+        assertThat(detailResponse.getCategoryId()).isEqualTo(fakeCategoryManagePort.lastId());
+        assertThat(detailResponse.getProcessId()).isEqualTo(process.getProcessId());
+        assertThat(detailResponse.getTitle()).isEqualTo("Dilemma domain design");
+        assertThat(detailResponse.getDetails()).isEqualTo("considering about use case and business logic");
     }
 
 }

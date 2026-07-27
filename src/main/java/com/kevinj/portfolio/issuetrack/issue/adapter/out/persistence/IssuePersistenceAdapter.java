@@ -15,10 +15,11 @@ import com.kevinj.portfolio.issuetrack.issue.application.port.out.IssuePort;
 import com.kevinj.portfolio.issuetrack.issue.domain.model.IssueAttributesDomain;
 import com.kevinj.portfolio.issuetrack.issue.domain.model.IssueDomain;
 import com.kevinj.portfolio.issuetrack.issue.domain.model.enums.IssueStatus;
-import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.JpaProcessRepositiry;
+import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.JpaProcessRepository;
 import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.JpaStepRepository;
 import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.Process;
 import com.kevinj.portfolio.issuetrack.process.adapter.out.persistence.Step;
+import com.kevinj.portfolio.issuetrack.storage.adapter.out.persistence.JpaUploadFileRepository;
 import com.kevinj.portfolio.issuetrack.user.adapter.out.UserMapper;
 import com.kevinj.portfolio.issuetrack.user.adapter.out.persistence.JpaUserRepository;
 import com.kevinj.portfolio.issuetrack.user.adapter.out.persistence.Users;
@@ -38,11 +39,12 @@ public class IssuePersistenceAdapter implements IssuePort {
     private final JpaUserRepository jpaUserRepository;
     private final JpaCategoryRepository jpaCategoryRepository;
     private final JpaAttributesRepository  jpaAttributesRepository;
-    private final JpaProcessRepositiry jpaProcessRepositiry;
+    private final JpaProcessRepository jpaProcessRepository;
     private final JpaStepRepository jpaStepRepository;
     private final JpaIssueRepository jpaIssueRepository;
     private final JpaIssueAttributesRepository jpaIssueAttributesRepository;
     private final IssueQueryRepository issueQueryRepository;
+    private final JpaIssueFilesRepository jpaIssueFilesRepository;
 
     private final UserMapper userMapper;
     private final CategoryMapper categoryMapper;
@@ -55,7 +57,7 @@ public class IssuePersistenceAdapter implements IssuePort {
 
         Users users = jpaUserRepository.getReferenceById(issueDomain.getUserId());
         Category category = jpaCategoryRepository.getReferenceById(issueDomain.getCategoryId());
-        Process process = jpaProcessRepositiry.getReferenceById(issueDomain.getProcessId());
+        Process process = jpaProcessRepository.getReferenceById(issueDomain.getProcessId());
         Step initialStepEntity = jpaStepRepository.getReferenceById(issueDomain.getCurrentStepId());
 
         Issue issue = jpaIssueRepository.save(
@@ -123,7 +125,7 @@ public class IssuePersistenceAdapter implements IssuePort {
         List<IssueAttributes> issueAttributesList = jpaIssueAttributesRepository.findByIssue(
             jpaIssueRepository.getReferenceById(issueDomain.getIssueId())
         );
-        Process process = jpaProcessRepositiry.getReferenceById(issueDomain.getProcessId());
+        Process process = jpaProcessRepository.getReferenceById(issueDomain.getProcessId());
         Step currentStep = jpaStepRepository.findById(issueDomain.getCurrentStepId())
             .orElseThrow(() -> new EntityNotFoundException("Step not found"));
 
@@ -168,12 +170,11 @@ public class IssuePersistenceAdapter implements IssuePort {
         Issue issue = jpaIssueRepository.findByIssueIdAndUser(issueId, userMapper.toUsersEntity(user))
                 .orElseThrow(() -> new EntityNotFoundException("Issue not found"));
 
-        return new IssueDetailResponse(
+        IssueDetailResponse result = new IssueDetailResponse(
                 issueId,
                 issue.getCategory().getCategoryId(),
                 categoryMapper.getParentPath(issue.getCategory()),
                 issue.getCategory().getLabel(),
-                issueQueryRepository.getIssueAttributesDisplayList(issueId),
                 issue.getProcess().getProcessId(),
                 issue.getProcess().getName(),
                 issue.getCurrentStep().getStepId(),
@@ -183,6 +184,32 @@ public class IssuePersistenceAdapter implements IssuePort {
                 issue.getCreatedAt(),
                 issue.getUpdatedAt()
         );
+
+        result.setIssueAttributesList(issueQueryRepository.getIssueAttributesDisplayList(issueId));
+
+        return result;
+    }
+
+    @Override
+    public void saveIssueFiles(Long issueId, List<Long> fileIdList) {
+        Issue issue = jpaIssueRepository.getReferenceById(issueId);
+        jpaIssueFilesRepository.deleteByIssue_IssueId(issueId);
+
+        for (Long fileId : fileIdList) {
+            IssueFiles issueFile = new IssueFiles(issue, fileId);
+            jpaIssueFilesRepository.save(issueFile);
+        }
+    }
+
+    @Override
+    public List<Long> getIssueFileIds(Long issueId) {
+        Issue issue = jpaIssueRepository.findById(issueId)
+            .orElseThrow(() -> new EntityNotFoundException("Issue not found"));
+
+        return issue.getIssueFileList()
+            .stream()
+            .map(IssueFiles::getFileId)
+            .toList();
     }
 
     @Override

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface JpaProcessRepositiry extends JpaRepository<Process, Long> {
+public interface JpaProcessRepository extends JpaRepository<Process, Long> {
     Optional<Process> findByProcessIdAndUser(Long processId, Users user);
     Optional<Process> findByName(String name);
 }

@@ -16,6 +16,8 @@ import com.kevinj.portfolio.issuetrack.process.domain.model.ProcessDomain;
 import com.kevinj.portfolio.issuetrack.process.domain.model.StepDomain;
 import com.kevinj.portfolio.issuetrack.process.exception.process.ProcessNotFoundException;
 import com.kevinj.portfolio.issuetrack.process.exception.step.StepNotFoundException;
+import com.kevinj.portfolio.issuetrack.storage.application.port.out.FilePersistencePort;
+import com.kevinj.portfolio.issuetrack.storage.domain.model.UploadFileDomain;
 import com.kevinj.portfolio.issuetrack.user.application.port.out.UserPort;
 import com.kevinj.portfolio.issuetrack.user.domain.model.User;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +40,7 @@ public class IssueService implements IssueUseCase {
     private final ProcessPort processPort;
     private final StepPort stepPort;
     private final IssuePort issuePort;
+    private final FilePersistencePort filePersistencePort;
 
     @Override
     public void createIssue(Long userId, IssueCreateCommand issueCreateCommand) {
@@ -73,6 +76,7 @@ public class IssueService implements IssueUseCase {
         Long issueId = issuePort.createIssue(issueDomain);
 
         issuePort.createIssueAttributes(issueId, issueCreateCommand.issueAttributes());
+        issuePort.saveIssueFiles(issueId, issueCreateCommand.fileIds());
     }
 
     @Override
@@ -110,6 +114,7 @@ public class IssueService implements IssueUseCase {
 
         issueDomain.update(issueModifyCommand.categoryId(), issueModifyCommand.title(), issueModifyCommand.details());
         issuePort.saveIssue(issueDomain);
+        issuePort.saveIssueFiles(issueModifyCommand.issueId(), issueModifyCommand.fileIds());
 
         for (IssueAttributesDomain issueAttributesDomain : issueAttributesDomainList) {
             issuePort.saveIssueAttributes(issueAttributesDomain);
@@ -205,7 +210,21 @@ public class IssueService implements IssueUseCase {
     public IssueDetailResponse getIssueDetails(Long userId, Long issueId) {
         User user = getUser(userId);
 
-        return issuePort.getIssueDetails(user, issueId);
+        IssueDetailResponse result = issuePort.getIssueDetails(user, issueId);
+        List<UploadFileDomain> uploadFileList = filePersistencePort.showFileInfoList(issuePort.getIssueFileIds(issueId));
+
+        result.setIssueFilesList(
+            uploadFileList.stream().map(
+                f -> new IssueFilesResponseInfo(
+                    f.getFileId(),
+                    f.getFileName(),
+                    f.getFileSize(),
+                    f.getFileUrl()
+                )
+            ).toList()
+        );
+
+        return result;
     }
 
     private User getUser(Long userId) {

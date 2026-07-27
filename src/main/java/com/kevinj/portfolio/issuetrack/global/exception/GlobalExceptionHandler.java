@@ -15,6 +15,7 @@ import com.kevinj.portfolio.issuetrack.issue.exception.IssueNotFoundException;
 import com.kevinj.portfolio.issuetrack.process.exception.process.ProcessAlreadyDeletedException;
 import com.kevinj.portfolio.issuetrack.process.exception.process.ProcessException;
 import com.kevinj.portfolio.issuetrack.process.exception.process.ProcessNotFoundException;
+import com.kevinj.portfolio.issuetrack.storage.exception.StorageException;
 import com.kevinj.portfolio.issuetrack.user.exception.DuplicatedEmailException;
 import com.kevinj.portfolio.issuetrack.user.exception.DuplicatedLoginIdException;
 import com.kevinj.portfolio.issuetrack.user.exception.NotFoundUserException;
@@ -58,6 +59,9 @@ public class GlobalExceptionHandler {
             if (ex instanceof IssueNotFoundException) {
                 statusCode = 404;
             }
+
+//        } else if (ex instanceof StorageException) {
+            // file 미등록 케이스는 기본 bad request로 exception처리
 
         } else if (ex instanceof DilemmaException) {
             if (ex instanceof DilemmaNotFoundException || ex instanceof DiscussionNotFoundException) {

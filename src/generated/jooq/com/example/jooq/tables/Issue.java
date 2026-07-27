@@ -9,6 +9,7 @@ import com.example.jooq.Keys;
 import com.example.jooq.tables.Category.CategoryPath;
 import com.example.jooq.tables.Dilemma.DilemmaPath;
 import com.example.jooq.tables.IssueAttributes.IssueAttributesPath;
+import com.example.jooq.tables.IssueFiles.IssueFilesPath;
 import com.example.jooq.tables.Process.ProcessPath;
 import com.example.jooq.tables.Step.StepPath;
 import com.example.jooq.tables.Users.UsersPath;
@@ -267,6 +268,19 @@ public class Issue extends TableImpl<IssueRecord> {
             _issueAttributes = new IssueAttributesPath(this, null, Keys.ISSUE_ATTRIBUTES__ISSUE_ATTRIBUTES_ISSUE_FK.getInverseKey());
 
         return _issueAttributes;
+    }
+
+    private transient IssueFilesPath _issueFiles;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>issuetrack.issue_files</code> table
+     */
+    public IssueFilesPath issueFiles() {
+        if (_issueFiles == null)
+            _issueFiles = new IssueFilesPath(this, null, Keys.ISSUE_FILES__ISSUE_ISSUE_FILES_FK.getInverseKey());
+
+        return _issueFiles;
     }
 
     @Override
