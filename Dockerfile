@@ -22,6 +22,9 @@ COPY --from=builder /app/build/libs/*.jar app.jar
 
 # Render PORT 주입 대응 및 JVM 메모리 제한 옵션 설정
 ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
-EXPOSE ${PORT:-10000}
+EXPOSE 8080
 
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Dserver.port=${PORT:-10000} -jar app.jar"]
+# 1) sh -c를 사용하여 PORT 환경변수 치환 기능 활성화
+# 2) 512MB 메모리 한도에 맞춘 컨테이너 메모리 최적화 옵션 주입
+# 3) SecureRandom 블로킹 방지를 위한 urandom 옵션 주입
+ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/./urandom -Dserver.port=${PORT:10000} -jar app.jar"]
