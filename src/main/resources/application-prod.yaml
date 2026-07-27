@@ -2,22 +2,18 @@ spring:
   config:
     activate:
       on-profile: prod
-
   servlet:
     multipart:
       max-file-size: 50B
       max-request-size: 50MB
-
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver # Postgresql 드라이버 클래스
-
   data:
     redis:
       url: ${REDISS_URL}
-
   security:
     oauth2:
       client:
@@ -34,7 +30,6 @@ spring:
             scope:
               - read:user
               - user:email # 🌟 이 권한이 있어야 비공개 이메일 주소 전용 API에 접근할 수 있습니다.
-
   jpa:
     hibernate:
       ddl-auto: validate
@@ -42,7 +37,6 @@ spring:
       hibernate:
         default_schema: public
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
 cloud:
   aws:
     credentials:
@@ -54,7 +48,6 @@ cloud:
       bucket: uploads
       # Supabase S3 등 호환 API 사용 시 엔드포인트 수동 지정 (AWS S3 기본 사용 시 생략 가능)
       endpoint: ${S3_ENDPOINT}
-
 #*production profile sql logging configs
 app:
   sql-logging:
@@ -62,13 +55,11 @@ app:
     log-sql: false
     multiline: false
     slow-query-threshold-ms: 2000
-
 logging:
   level:
     org.springframework.security: WARN
     com.kevinj.potfolio.common.logging.sql: WARN
     com.kevinj.potfolio.common.logging.jooq-inline: OFF
-
 jwt:
   secret: ${JWT_SECRET}
   access-ttl-seconds: 900       #15분
