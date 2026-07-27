@@ -15,6 +15,10 @@ spring:
           implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
   jackson:
     time-zone: UTC          # 표시 UTC (글로벌 상대로 제일 무난)
+  data:
+    redis:
+      repositories:
+        enabled: false
 server:
   port: ${PORT:8080}
 logging:
