@@ -11,6 +11,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 public class DataSourceProxyConfig {
 
     @Bean
-    public BeanPostProcessor dataSourceProxyBeanPostProcessor(SqlLoggingProperties properties) {
+    public static BeanPostProcessor dataSourceProxyBeanPostProcessor(@Lazy SqlLoggingProperties properties) {
         return new BeanPostProcessor() {
             @Override
             public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {

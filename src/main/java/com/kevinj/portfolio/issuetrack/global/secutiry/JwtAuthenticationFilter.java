@@ -61,6 +61,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // 필터 타지 않는 uri: 로그인, 회원가입, dilemma 검색, dilemma 상세조회
         return path.startsWith("/auth/")
             || List.of("/users/signup", "/dilemma/search").contains(path)
+            || path.matches("/hello")
             || path.matches("^/dilemma/[0-9]+$");
     }
 
