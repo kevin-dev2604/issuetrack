@@ -21,7 +21,7 @@ WORKDIR /app
 COPY --from=builder /app/build/libs/*.jar app.jar
 
 # Render PORT 주입 대응 및 JVM 메모리 제한 옵션 설정
-ENV JAVA_OPTS="-Xms256m -Xmx350m -XX:+UseG1GC"
-EXPOSE 8080
+ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+EXPOSE ${PORT:-10000}
 
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Dserver.port=${PORT:-8080} -jar app.jar"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Dserver.port=${PORT:-10000} -jar app.jar"]
