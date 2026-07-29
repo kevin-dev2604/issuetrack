@@ -41,8 +41,8 @@ spring:
 
   data:
     redis:
-      host: localhost
-      port: 6379
+      # 호스트/포트 대신 단일 URL을 환경변수로 받거나 기본값 지정
+      url: redis://localhost:6379
 
 storage:
   local:
